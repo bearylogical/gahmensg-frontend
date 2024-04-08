@@ -1,0 +1,212 @@
+<script lang="ts">
+    import {
+        Chart,
+        Bounds,
+        Treemap,
+        Group,
+        Rect,
+        ChartClipPath,
+        Svg,
+        Text,
+        RectClipPath,
+        Tooltip,
+        TooltipItem,
+        findAncestor,
+    } from "layerchart";
+    import { cls, Button } from "svelte-ux";
+
+    import { cubicOut } from "svelte/easing";
+    import { fade } from "svelte/transition";
+    import { scaleSequential, scaleOrdinal } from "d3-scale";
+    import * as chromatic from "d3-scale-chromatic";
+    import { Breadcrumb } from "svelte-ux";
+    import { hsl } from "d3-color";
+    import * as d3 from "d3";
+    export let data;
+
+    function parseData(data) {
+        const stratifyData = d3.stratify().path((d) => d.object_path)(data);
+        const hierarchyData = d3
+            .hierarchy(stratifyData)
+            .sum((d) => (d.data ? d.data.value_amount : 0))
+            .sort((a, b) => b.value - a.value);
+        return hierarchyData;
+    }
+
+    function isNodeVisible(a, b) {
+        while (b) {
+            if (a.parent === b) return true;
+            b = b.parent;
+        }
+
+        return false;
+    }
+    $: hierarchy = parseData(data);
+
+    function formatTitle(d) {
+        return d.data.id.split("/").pop();
+    }
+
+    let isFiltered = false;
+
+    let tile = "binary";
+    let colorBy = "parent";
+
+    let selectedNested = null;
+    let selectedZoomable = null;
+
+    const sequentialColor = scaleSequential([4, -1], chromatic.interpolateGnBu);
+    // filter out hard to see yellow and green
+    const ordinalColor = scaleOrdinal(
+        chromatic.schemeSpectral[9].filter(
+            (c) => hsl(c).h < 60 || hsl(c).h > 90,
+        ),
+    );
+    // const ordinalColor = scaleOrdinal(chromatic.schemeCategory10)
+
+    function getNodeColor(node, colorBy) {
+        switch (colorBy) {
+            case "children":
+                return node.children
+                    ? "hsl(var(--color-primary-500))"
+                    : "hsl(var(--color-primary-400))";
+            case "depth":
+                return sequentialColor(node.depth);
+            case "parent":
+                const colorParent = findAncestor(node, (n) => n.depth === 1);
+                return colorParent
+                    ? hsl(ordinalColor(colorParent.data.id)).brighter(
+                          node.depth * 0.3,
+                      )
+                    : "#ddd";
+        }
+    }
+</script>
+
+<Breadcrumb items={selectedZoomable?.ancestors().reverse() ?? []} class="pb-4">
+    <Button
+        slot="item"
+        let:item
+        on:click={() => (selectedZoomable = item)}
+        base
+        class="px-2 py-1 hover:bg-slate-200 hover:text-slate-40 hover:rounded"
+    >
+        <div class="text-left">
+            <div class="text-xl">
+                {item.data.id == "/"
+                    ? "Government Expenditure"
+                    : formatTitle(item)}
+            </div>
+            <div class="text-xs font-light">
+                {d3.format("$,")(item.value)}
+            </div>
+        </div>
+    </Button>
+</Breadcrumb>
+<div class="h-[600px] p-4 border rounded">
+    <Chart data={hierarchy.copy()} tooltip={{ mode: "manual" }} let:tooltip>
+        <Svg>
+            <Bounds
+                domain={selectedZoomable}
+                tweened={{ duration: 800, easing: cubicOut }}
+                range={{ x: [0, 1], y: [0, 1] }}
+                let:xScale
+                let:yScale
+            >
+                <ChartClipPath>
+                    <Treemap let:nodes {tile} bind:selected={selectedZoomable}>
+                        {#each nodes as node}
+                            <Group
+                                x={xScale(node.x0)}
+                                y={yScale(node.y0)}
+                                on:click={() =>
+                                    node.children
+                                        ? (selectedZoomable = node)
+                                        : null}
+                                on:mousemove={(e) => tooltip.show(e, node)}
+                                on:mouseleave={tooltip.hide}
+                            >
+                                {@const nodeWidth =
+                                    xScale(node.x1) - xScale(node.x0)}
+                                {@const nodeHeight =
+                                    yScale(node.y1) - yScale(node.y0)}
+                                <RectClipPath
+                                    width={nodeWidth}
+                                    height={nodeHeight}
+                                >
+                                    {@const nodeColor = getNodeColor(
+                                        node,
+                                        colorBy,
+                                    )}
+                                    {#if isNodeVisible(node, selectedZoomable)}
+                                        <g transition:fade={{ duration: 600 }}>
+                                            <Rect
+                                                width={nodeWidth}
+                                                height={nodeHeight}
+                                                stroke={colorBy === "children"
+                                                    ? "hsl(var(--color-primary-content))"
+                                                    : hsl(nodeColor).darker(1)}
+                                                stroke-opacity={colorBy ===
+                                                "children"
+                                                    ? 0.2
+                                                    : 1}
+                                                fill={nodeColor}
+                                            />
+                                            <Text
+                                                value="{formatTitle(
+                                                    node,
+                                                )} ({node.children?.length ??
+                                                    0})"
+                                                class={cls(
+                                                    "text-md",
+                                                    colorBy === "children"
+                                                        ? "fill-primary-content"
+                                                        : "fill-black",
+                                                )}
+                                                verticalAnchor="start"
+                                                x={10}
+                                                y={10}
+                                            />
+                                            <Text
+                                                value={d3.format("$,")(
+                                                    node.value,
+                                                )}
+                                                class={cls(
+                                                    "text-sm font-extralight text-wrap",
+                                                    colorBy === "children"
+                                                        ? "fill-primary-content"
+                                                        : "fill-black",
+                                                )}
+                                                verticalAnchor="start"
+                                                x={10}
+                                                y={30}
+                                            />
+                                        </g>
+                                    {/if}
+                                </RectClipPath>
+                            </Group>
+                        {/each}
+                    </Treemap>
+                </ChartClipPath>
+            </Bounds>
+        </Svg>
+        <Tooltip
+            header={(data) => formatTitle(data)}
+            classes={{
+                container: "bg-slate-50",
+                header: "text-slate-40",
+            }}
+            let:data
+        >
+            <TooltipItem
+                label="Expenditure"
+                value={data.value}
+                format="currency"
+                valueAlign="left"
+            />
+        </Tooltip>
+    </Chart>
+</div>
+
+<style>
+</style>
