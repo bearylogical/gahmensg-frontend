@@ -61,10 +61,9 @@
 				y="-45%"
 				x="-40%"
 				dy={i > 0 ? "1.2em" : 0}
-				fill={i > 0 ? "gray" : "var(--color-primary)"}
 				class={i > 0
-					? "inline text-md font-light "
-					: "inline text-xl font-bold"}
+					? "inline text-md font-light fill-gray-400 dark:fill-white-600 "
+					: "inline text-xl font-bold fill-black dark:fill-white-800"}
 				>{line}
 			</tspan>
 		{/each}

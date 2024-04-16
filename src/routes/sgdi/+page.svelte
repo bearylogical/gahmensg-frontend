@@ -9,6 +9,7 @@
     let selectedMinistry: string;
     let selectedMinistryId: number;
     let selectedData: [] = [];
+    let focusElement: HTMLElement;
 
     let showLabels = false;
     let showNodes = false;
@@ -30,6 +31,7 @@
         fetchMinistryLinks(selectedMinistryId).then((res) => {
             selectedData = res;
         });
+        focusElement.scrollIntoView({ behavior: "smooth", block: "start" });
     }
 </script>
 
@@ -80,7 +82,7 @@
         </Card.Root>
     </div>
 </div>
-<div class="mx-auto container pt-10">
+<div class="mx-auto container pt-10" bind:this={focusElement}>
     {#if selectedData.length > 0}
         <div class="min-h-full border rounded content-center">
             <RadialTidyTree
@@ -93,8 +95,8 @@
             />
         </div>
     {:else}
-        <div class="h-[900px] border rounded content-center">
-            <p class=" text-center text-4xl">No data available</p>
+        <div class="h-[900px] border rounded flex items-center justify-center">
+            <p class="text-center text-4xl">No data available</p>
         </div>
     {/if}
 </div>

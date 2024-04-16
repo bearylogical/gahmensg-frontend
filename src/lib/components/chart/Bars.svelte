@@ -1,5 +1,5 @@
 <script>
-	import * as d3 from 'd3';
+	import * as d3 from "d3";
 
 	export let data = [];
 	export let keyAccessor = () => {};
@@ -7,16 +7,17 @@
 	export let yAccessor = () => {};
 	export let widthAccessor = () => {};
 	export let heightAccessor = () => {};
-	export let style = '';
+	export let style = "";
 
 	export const callAccessor = (accessor, d, i) =>
-		typeof accessor === 'function' ? accessor(d, i) : accessor;
+		typeof accessor === "function" ? accessor(d, i) : accessor;
+
+	$: console.log(data);
 </script>
 
 {#each data as d, i (keyAccessor(d) || i)}
 	<rect
 		{style}
-		key={keyAccessor(d, i)}
 		x={callAccessor(xAccessor, d, i)}
 		y={callAccessor(yAccessor, d, i)}
 		width={d3.max([callAccessor(widthAccessor, d, i), 0])}

@@ -8,7 +8,7 @@
 	import Title from "./TreeTitle.svelte";
 	import d3ToPng from "d3-svg-to-png";
 	import { getDateTimeString } from "$lib/utils/exporter.js";
-	import { pannable } from "$lib/utils/pannable";
+	import { fade } from "svelte/transition";
 	import * as d3 from "d3";
 
 	export let dimensions: any;
@@ -105,6 +105,8 @@
 	on:dblclick={resetZoom}
 >
 	<g
+		in:fade={{ duration: 400 }}
+		out:fade={{ duration: 200 }}
 		transform={`translate(` +
 			dimensions.width / 2 +
 			"," +

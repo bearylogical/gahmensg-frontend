@@ -2,7 +2,7 @@
     /** @type {import('./$types').PageData} */
     import * as Select from "$lib/components/ui/select";
     import * as Card from "$lib/components/ui/card/index.js";
-    import Treemap from "$lib/components/chart/Treemap.svelte";
+    import Treemap from "$lib/components/Treemap.svelte";
     import { apiURL } from "$lib/utils/constants.js";
     export let data;
     let selectedYear = "";
@@ -10,6 +10,7 @@
     let drillDownData: [] = [];
     let selectedExpenditure = "";
     let disableSelect = true;
+    let focusElement: HTMLElement;
 
     async function fetchDrillDown(selectedYear, selectedExpenditure) {
         const queryURL =
@@ -37,10 +38,9 @@
         disableSelect = false;
     }
 
-    $: if (selectedYear && selectedExpenditure) {
-        fetchHandler();
-    }
-    $: console.log(availOpts);
+    // $: if (selectedYear && selectedExpenditure) {
+    //     fetchHandler();
+    // }
 </script>
 
 <div
@@ -89,8 +89,14 @@
                         <p class="text-sm pb-2">Expenditure Type</p>
                         <Select.Root
                             disabled={disableSelect}
-                            onSelectedChange={(opt) =>
-                                (selectedExpenditure = opt.value)}
+                            onSelectedChange={(opt) => {
+                                selectedExpenditure = opt.value;
+                                fetchHandler();
+                                focusElement.scrollIntoView({
+                                    behavior: "smooth",
+                                    block: "start",
+                                });
+                            }}
                         >
                             <Select.Trigger>
                                 <Select.Value
@@ -118,14 +124,12 @@
     </div>
 </div>
 
-{#if drillDownData.length > 0}
-    <div class="mx-auto container pt-10">
+<div class="mx-auto container pt-10" bind:this={focusElement}>
+    {#if drillDownData.length > 0}
         <Treemap data={drillDownData} />
-    </div>
-{:else}
-    <div class="mx-auto container pt-10">
-        <div class="h-[600px] border rounded content-center">
-            <p class=" text-center text-4xl">No data available</p>
+    {:else}
+        <div class="h-[600px] border rounded flex items-center justify-center">
+            <p class="text-center text-4xl">No data available</p>
         </div>
-    </div>
-{/if}
+    {/if}
+</div>

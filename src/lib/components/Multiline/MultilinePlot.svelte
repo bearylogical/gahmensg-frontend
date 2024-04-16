@@ -8,7 +8,6 @@
     let actualData: [];
     let estimatedData: [];
     let revisedData: [];
-    console.log(data);
     function filterData(data, valueType) {
         return data
             .filter((d) => d.value_type === valueType)
@@ -48,8 +47,7 @@
 
     // filter out only value_type of "ACTUAL"
     $: subsetData(data);
-    $: console.log(actualData);
-
+    $: console.log(data);
     let div;
     $: {
         if (data.length > 0) {
@@ -103,7 +101,15 @@
                             strokeOpacity: 0.7,
                             strokeWidth: 3,
                         }),
-                        Plot.do,
+                        Plot.lineY(data, { x: "value_year", y: "Close" }),
+                        Plot.ruleX(
+                            data,
+                            Plot.pointerX({
+                                x: "value_year",
+                                py: "value_amount",
+                                stroke: "red",
+                            }),
+                        ),
                     ],
                 }),
             ); // add the new chart
@@ -113,15 +119,13 @@
     }
 </script>
 
-<div class="h-[600px] border rounded">
-    {#key data}
-        <div
-            in:fade={{ duration: 200 }}
-            bind:this={div}
-            class="grid place-items-center h-full size-[100%]"
-        ></div>
-    {/key}
-</div>
+{#key data}
+    <div
+        in:fade={{ duration: 200 }}
+        bind:this={div}
+        class="grid place-items-center h-full size-[100%]"
+    ></div>
+{/key}
 
 <style>
     .Multiplot {

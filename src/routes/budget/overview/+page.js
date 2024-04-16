@@ -21,7 +21,6 @@ export async function load({ fetch }) {
     const consolidatedOptionsArr = Object.entries(consolidatedOptions).map(([year, options]) => ({ year, options }));
     // sort the array by year
     consolidatedOptionsArr.sort((a, b) => b.year - a.year);
-    console.log(consolidatedOptionsArr);
     return { consolidatedOptionsArr };
 
 }

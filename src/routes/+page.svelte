@@ -2,7 +2,6 @@
 	import { Button } from "flowbite-svelte";
 	import { ArrowRightOutline } from "flowbite-svelte-icons";
 	import HeroHeader from "$lib/components/hero/HeroHeader.svelte";
-	import Section from "$lib/components/Section.svelte";
 	import heroImage from "$lib/assets/lion_search.png";
 </script>
 

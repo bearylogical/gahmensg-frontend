@@ -52,17 +52,16 @@
     let tile = "binary";
     let colorBy = "parent";
 
-    let selectedNested = null;
     let selectedZoomable = null;
 
-    const sequentialColor = scaleSequential([4, -1], chromatic.interpolateGnBu);
+    const sequentialColor = scaleSequential([3, -1], chromatic.interpolateGnBu);
     // filter out hard to see yellow and green
     const ordinalColor = scaleOrdinal(
         chromatic.schemeSpectral[9].filter(
             (c) => hsl(c).h < 60 || hsl(c).h > 90,
         ),
     );
-    // const ordinalColor = scaleOrdinal(chromatic.schemeCategory10)
+    // const ordinalColor = scaleOrdinal(chromatic.schemeSpectral[];
 
     function getNodeColor(node, colorBy) {
         switch (colorBy) {
@@ -89,7 +88,7 @@
         let:item
         on:click={() => (selectedZoomable = item)}
         base
-        class="px-2 py-1 hover:bg-slate-200 hover:text-slate-40 hover:rounded"
+        class="px-2 py-2 hover:bg-slate-200 hover:text-slate-40 hover:rounded"
     >
         <div class="text-left">
             <div class="text-xl">
@@ -97,7 +96,7 @@
                     ? "Government Expenditure"
                     : formatTitle(item)}
             </div>
-            <div class="text-xs font-light">
+            <div class="text-xs font-light pb-2">
                 {d3.format("$,")(item.value)}
             </div>
         </div>
@@ -193,8 +192,9 @@
         <Tooltip
             header={(data) => formatTitle(data)}
             classes={{
-                container: "bg-slate-50",
-                header: "text-slate-40",
+                container: "bg-slate-50 dark:bg-slate-800",
+                header: "text-slate-40 dark:text-white text-left",
+                content: "text-slate-40 dark:text-white text-left",
             }}
             let:data
         >

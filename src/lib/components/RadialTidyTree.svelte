@@ -1,8 +1,7 @@
 <script lang="ts">
-	import Chart from "./chart/Chart.svelte";
-	import Tree from "./chart/Tree.svelte";
-	import Tooltip from "./chart/Tooltip.svelte";
-	import Title from "./chart/TreeTitle.svelte";
+	import Chart from "./RadialTree/RadialTreeChart.svelte";
+	import Tree from "./RadialTree/Tree.svelte";
+	import Tooltip from "./RadialTree/Tooltip.svelte";
 	import { toolTipData, hoverState } from "$lib/stores/hoverStore.js";
 	import { selectedNodeState } from "$lib/stores/dataStore.js";
 	import * as d3 from "d3";
