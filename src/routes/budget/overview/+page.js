@@ -1,4 +1,5 @@
 import { apiURL } from "$lib/utils/constants.js";
+export const prerender = false;
 /** @type {import('../$types').PageLoad} */
 export async function load({ fetch }) {
     const budgetOptsRes = await fetch(apiURL + `/budget/opts`).then((r) => r.json());

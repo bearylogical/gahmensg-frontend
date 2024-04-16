@@ -1,4 +1,4 @@
-export const prerender = true;
+export const prerender = false;
 // src/routes/+layout.js
 export const load = ({ url }) => {
     const { pathname } = url;
