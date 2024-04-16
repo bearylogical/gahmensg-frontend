@@ -47,6 +47,7 @@
     "d3-scale": "^4.0.2",
     "d3-scale-chromatic": "^3.1.0",
     "d3-svg-to-png": "^0.3.1",
+    "d3-zoom": "^3.0.0",
     "layerchart": "^0.34.0",
     "lucide-svelte": "^0.364.0",
     "mode-watcher": "^0.3.0",
