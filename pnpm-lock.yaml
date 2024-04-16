@@ -41,6 +41,9 @@ dependencies:
   mode-watcher:
     specifier: ^0.3.0
     version: 0.3.0(svelte@4.2.12)
+  svelte-ux:
+    specifier: ^0.62.8
+    version: 0.62.8(postcss-load-config@5.0.3)(postcss@8.4.38)(svelte@4.2.12)
   tailwind-merge:
     specifier: ^2.2.2
     version: 2.2.2
@@ -1830,7 +1833,7 @@ packages:
       posthog-js: 1.118.1
       shapefile: 0.6.6
       svelte: 4.2.12
-      svelte-ux: 0.62.6(postcss-load-config@5.0.3)(postcss@8.4.38)(svelte@4.2.12)
+      svelte-ux: 0.62.8(postcss-load-config@5.0.3)(postcss@8.4.38)(svelte@4.2.12)
       topojson-client: 3.1.0
     transitivePeerDependencies:
       - '@babel/core'
@@ -2652,8 +2655,8 @@ packages:
       svelte: 4.2.12
     dev: true
 
-  /svelte-ux@0.62.6(postcss-load-config@5.0.3)(postcss@8.4.38)(svelte@4.2.12):
-    resolution: {integrity: sha512-yCmtgVraB940MQyeuarvg38o+aqomRHtg36eoA76yCh2RRy6DhKQ+WV371SrTTbK/vBbmLpXC8rarWDSIjf/Cw==}
+  /svelte-ux@0.62.8(postcss-load-config@5.0.3)(postcss@8.4.38)(svelte@4.2.12):
+    resolution: {integrity: sha512-M+FbcMtNpJVN4zhLc54Ks2ClKfTPmF3eNzoA4CuHGGog4RwJ/Xd1d/Wn4BXCxEjSZZT5SRQzws95f78S3ZDu3w==}
     peerDependencies:
       svelte: ^3.56.0 || ^4.0.0
     dependencies:

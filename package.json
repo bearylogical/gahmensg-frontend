@@ -50,6 +50,7 @@
     "layerchart": "^0.34.0",
     "lucide-svelte": "^0.364.0",
     "mode-watcher": "^0.3.0",
+    "svelte-ux": "^0.62.8",
     "tailwind-merge": "^2.2.2",
     "tailwind-variants": "^0.2.1"
   }
