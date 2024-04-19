@@ -1,5 +1,6 @@
 import { apiURL } from "$lib/utils/constants.js";
-export const prerender = 'auto';
+export const prerender = false;
+
 /** @type {import('../$types').PageLoad} */
 export async function load({ fetch }) {
     const agencies = await fetch(apiURL + `/ministries`).then((r) => r.json());
