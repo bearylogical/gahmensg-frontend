@@ -47,7 +47,7 @@
 
     // filter out only value_type of "ACTUAL"
     $: subsetData(data);
-    $: console.log(data);
+    // $: console.log(data);
     let div;
     $: {
         if (data.length > 0) {

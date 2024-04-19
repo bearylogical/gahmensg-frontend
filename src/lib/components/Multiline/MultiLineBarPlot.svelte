@@ -52,9 +52,6 @@
         .range([dms.boundedHeight, 0])
         .nice();
 
-    $: console.log(pivotData);
-    $: console.log(xScale.domain());
-
     $: xAccessorScaled = (d) => xScale(xAccessor(d));
     $: yAccessorScaled = (d) => yScale(yAccessor(d));
     $: keyAccessor = (d, i) => i;
