@@ -10,8 +10,8 @@
     export let changeSince: string = "";
 </script>
 
-<Card size="xl" class="w-full max-w-none">
-    <div class="mb-4 flex items-center justify-between">
+<Card size="xl" class="w-full max-w-none h-fit">
+    <div class="mb-6 flex items-center justify-between">
         <div class="flex-shrink-0">
             <Heading tag="h3" class="text-2xl">{title}</Heading>
             <p class="text-base font-light text-gray-500 dark:text-gray-400">

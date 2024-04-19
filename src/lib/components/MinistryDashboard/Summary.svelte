@@ -70,15 +70,16 @@
             </div>
         </Popover>
     </div>
+
     <Tabs
         style="full"
-        defaultClass="flex divide-x rtl:divide-x-reverse divide-gray-200 shadow dark:divide-gray-700"
-        contentClass="p-3 mt-4"
+        defaultClass="flex divide-x rtl:divide-x-reverse divide-gray-200 shadow dark:divide-gray-700 "
+        contentClass="p-3 mt-3.5  "
     >
         <TabItem class="w-full" open>
             <span slot="title">Top personnel</span>
             <ul
-                class="-m-3 divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-800"
+                class="-m-3 divide-y divide-gray-300 dark:divide-gray-700 dark:bg-gray-800"
             >
                 {#each personnelData as { project_title, parent_header, value_amount, perc_diff, value_year }}
                     <li class="py-3 sm:py-4">

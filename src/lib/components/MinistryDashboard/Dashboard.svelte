@@ -81,17 +81,21 @@
     // $: console.log(getTopNData(getMostRecentYearDataNoSum(projectData), 5));
 </script>
 
-<div class="grid grid-cols-2 gap-4">
-    <ExpenditureWidget
-        chartOptions={chart_options}
-        {title}
-        {subtitle}
-        changeValue={getPercentageDiff(expenditureData).toFixed(2)}
-        changeSince={"from " +
-            (getMostRecentYearData(expenditureData).value_year - 1)}
-    />
-    <Summary
-        personnelData={summaryPersonnelData}
-        projectData={summaryProjectData}
-    ></Summary>
+<div class="grid md:grid-cols-2 sm:grid-cols-1 gap-4">
+    <div class="col-span-1">
+        <ExpenditureWidget
+            chartOptions={chart_options}
+            {title}
+            {subtitle}
+            changeValue={getPercentageDiff(expenditureData).toFixed(2)}
+            changeSince={"from " +
+                (getMostRecentYearData(expenditureData).value_year - 1)}
+        />
+    </div>
+    <div class="col-span-1">
+        <Summary
+            personnelData={summaryPersonnelData}
+            projectData={summaryProjectData}
+        ></Summary>
+    </div>
 </div>
