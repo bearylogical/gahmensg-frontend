@@ -8,6 +8,7 @@
     import { parseValue } from "$lib/components/MinistryDashboard/utils.js";
 
     export let data;
+    let focusElement: HTMLElement;
     let selectedAgency = "";
     let selectedID: number;
     let drillDownData: [] = [];
@@ -18,6 +19,12 @@
     let pivotExpenditureData = [];
     let pivotPersonnelData = [];
     let recentYear: number;
+
+    // default the agency to the first
+    $: if (data.agencies.length > 0) {
+        selectedAgency = data.agencies[0].id;
+        selectedID = data.agencies[0].name;
+    }
 
     // create weights for each value_type
     const weight = {
@@ -209,16 +216,15 @@
     $: if (selectedAgency && selectedID) {
         fetchHandler();
     }
-    $: console.log(pivotPersonnelData);
+    // $: console.log(pivotPersonnelData);
 </script>
 
 <div
-    class="grid auto-rows-max items-start gap-4 md:gap-8 lg:col-span-2 mx-auto container"
+    class="grid auto-rows-max items-start gap-4 md:gap-8 mx-auto container"
+    bind:this={focusElement}
 >
-    <div
-        class="grid gap-4 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-6 xl:grid-cols-4"
-    >
-        <Card.Root class="col-span-4">
+    <div class="grid gap-4 sm:grid-cols-1 md:grid-cols-4">
+        <Card.Root class="md:col-span-2 sm:col-span-1">
             <Card.Header>
                 <Card.Title>Explore expenditure by Ministry</Card.Title>
                 <Card.Description
@@ -234,10 +240,14 @@
                             typeahead={true}
                             onSelectedChange={(agency) => {
                                 selectMinistryHandler(agency);
+                                focusElement.scrollIntoView({
+                                    behavior: "smooth",
+                                    block: "start",
+                                });
                             }}
                         >
                             <Select.Trigger>
-                                <Select.Value placeholder="Select Agency" />
+                                <Select.Value placeholder={selectedID} />
                             </Select.Trigger>
                             <Select.Content
                                 class="overflow-y-auto max-h-[20rem]"
@@ -257,25 +267,7 @@
                 </div>
             </Card.Content>
         </Card.Root>
-        <div class="col-span-4">
-            {#if drillDownData.length > 0}
-                <Dashboard
-                    expenditureData={pivotExpenditureData}
-                    {personnelData}
-                    {projectData}
-                    title={selectedID}
-                    subtitle="Expenditure by year"
-                />
-            {:else}
-                <div
-                    class="h-[600px] border rounded flex items-center justify-center"
-                >
-                    <p class="text-center text-4xl">No data available</p>
-                </div>
-            {/if}
-        </div>
-
-        <Card.Root class=" col-span-1">
+        <Card.Root class="col-span-1">
             <Card.Header>
                 <Card.Description
                     >Estd. Expenditure {#if pivotExpenditureData.length > 0}
@@ -313,7 +305,7 @@
             </Card.Content>
             <Card.Footer></Card.Footer>
         </Card.Root>
-        <Card.Root class=" col-span-1">
+        <Card.Root class="col-span-1">
             <Card.Header>
                 <Card.Description
                     >Estd. Personnel Count {#if pivotPersonnelData.length > 0}
@@ -350,5 +342,23 @@
             </Card.Content>
             <Card.Footer></Card.Footer>
         </Card.Root>
+        <div class="md:col-span-4 sm:col-span-1">
+            {#if drillDownData.length > 0}
+                <Dashboard
+                    expenditureData={pivotExpenditureData}
+                    {personnelData}
+                    {projectData}
+                    title={selectedID}
+                    subtitle="Expenditure by year"
+                />
+            {:else}
+                <div
+                    class="h-[600px] border rounded flex items-center justify-center"
+                >
+                    <p class="text-center text-4xl">No data available</p>
+                </div>
+            {/if}
+        </div>
+        <div class="grid gap-4 md:col-span-1 sm:col-span-1"></div>
     </div>
 </div>
