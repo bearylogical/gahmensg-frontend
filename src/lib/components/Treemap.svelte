@@ -47,8 +47,6 @@
         return d.data.id.split("/").pop();
     }
 
-    let isFiltered = false;
-
     let tile = "binary";
     let colorBy = "parent";
 
