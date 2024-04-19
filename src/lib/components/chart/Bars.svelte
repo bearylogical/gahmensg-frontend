@@ -11,8 +11,6 @@
 
 	export const callAccessor = (accessor, d, i) =>
 		typeof accessor === "function" ? accessor(d, i) : accessor;
-
-	$: console.log(data);
 </script>
 
 {#each data as d, i (keyAccessor(d) || i)}
