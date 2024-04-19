@@ -26,6 +26,8 @@
                 >
             </svelte:fragment>
         </Page404>
+    {:else if $page.status === 200}
+        <slot />
     {:else}
         <Page500>
             <svelte:fragment slot="h1">{$page.status}</svelte:fragment>
