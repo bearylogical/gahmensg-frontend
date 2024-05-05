@@ -1,4 +1,4 @@
-import { apiURL } from "$lib/utils/constants.js";
+import { apiURL } from "$lib/utils/constants";
 export const prerender = false;
 
 
