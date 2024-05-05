@@ -19,7 +19,7 @@
         </h3>
     </div>
     <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
-        <Card.Root class="bg-slate-200">
+        <Card.Root class="bg-slate-200 ">
             <Card.Header>
                 <div>
                     <div class="flex justify-center">
@@ -30,10 +30,10 @@
                     </div>
                 </div>
 
-                <Card.Title class="text-2xl text-center"
+                <Card.Title class="text-2xl text-center truncate ..."
                     >Overall Spending
                 </Card.Title>
-                <Card.Description class="text-xl text-center"
+                <Card.Description class="text-xl text-center truncate ..."
                     >Get an overview of the budget</Card.Description
                 >
             </Card.Header>
@@ -57,10 +57,10 @@
                     </div>
                 </div>
 
-                <Card.Title class="text-2xl text-center"
+                <Card.Title class="text-2xl text-center truncate ..."
                     >Ministry / Organs of State
                 </Card.Title>
-                <Card.Description class="text-xl text-center"
+                <Card.Description class="text-xl text-center truncate ..."
                     >Get spending by Government body</Card.Description
                 >
             </Card.Header>
@@ -76,8 +76,7 @@
             <div class="ribbon ribbon-top-right">
                 <span>Coming Soon</span>
             </div>
-
-            <Card.Root class="bg-slate-200 opacity-20">
+            <Card.Root class="bg-slate-200 opacity-20 ">
                 <Card.Header>
                     <div class="flex justify-center">
                         <ClipboardOutline
@@ -89,7 +88,7 @@
                     <Card.Title class="text-2xl text-center"
                         >Projects</Card.Title
                     >
-                    <Card.Description class="text-xl text-center"
+                    <Card.Description class="text-xl text-center truncate ..."
                         >See in-depth spending by projects</Card.Description
                     >
                 </Card.Header>
@@ -106,7 +105,7 @@
 <style>
     .box {
         position: relative;
-        box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        /* box-shadow: 0 0 15px rgba(0, 0, 0, 0.1); */
     }
 
     /* common */
@@ -121,15 +120,15 @@
         position: absolute;
         z-index: -1;
         content: "";
-        display: block;
-        border: 5px solid rgb(153 27 27 / var(--tw-bg-opacity));
+        /* display: block; */
+        /* border: 5px solid rgb(153 27 27); */
     }
     .ribbon span {
         position: absolute;
         display: block;
         width: 225px;
-        padding: 15px 0;
-        background-color: rgb(153 27 27 / var(--tw-bg-opacity));
+        padding: 10px 0;
+        background-color: rgb(153 27 27);
         box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
         color: #fff;
         text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
@@ -163,8 +162,8 @@
 
     /* top right*/
     .ribbon-top-right {
-        top: -10px;
-        right: -10px;
+        top: 0px;
+        right: 0px;
     }
     .ribbon-top-right::before,
     .ribbon-top-right::after {
