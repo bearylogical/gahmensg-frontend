@@ -3,7 +3,7 @@
     import * as Select from "$lib/components/ui/select";
     import * as Card from "$lib/components/ui/card/index.js";
     import RadialTidyTree from "$lib/components/RadialTidyTree.svelte";
-    import { apiURL } from "$lib/utils/constants.js";
+    import { apiURL } from "$lib/utils/constants";
 
     export let data;
     let selectedMinistry: string;
@@ -36,7 +36,7 @@
 </script>
 
 <div
-    class="grid auto-rows-max items-start gap-4 md:gap-8 lg:col-span-2 mx-auto container"
+    class="grid auto-rows-max items-start gap-4 md:gap-8 lg:col-span-2 mx-auto container pt-10"
 >
     <div
         class="grid gap-4 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-2 xl:grid-cols-4"

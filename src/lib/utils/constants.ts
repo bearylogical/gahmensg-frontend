@@ -1,6 +1,6 @@
 import { dev } from '$app/environment';
 
-let apiURL;
+let apiURL: string;
 
 if (dev) {
     apiURL = 'http://localhost:3080/api/v1';
