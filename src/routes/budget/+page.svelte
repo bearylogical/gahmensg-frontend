@@ -94,7 +94,7 @@
                 </Card.Header>
                 <Card.Content>
                     <div class="flex justify-center">
-                        <Button color="primary">View</Button>
+                        <Button color="primary" disabled>View</Button>
                     </div>
                 </Card.Content>
             </Card.Root>
