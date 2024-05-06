@@ -69,14 +69,15 @@
 		</div>
 	{/if} -->
 
-	{#key data.pathname}
+	<!-- {#key data.pathname}
 		<div
 			in:fade={{ duration: 300, delay: 400 }}
 			out:fade={{ duration: 300 }}
 		>
-			<slot />
+			
 		</div>
-	{/key}
+	{/key} -->
+	<slot />
 
 	<section class="px-10 sm:px-2 sticky top-[100vh] py-6 sm:py-10">
 		<Footer>
