@@ -24,9 +24,10 @@
 
         return breadcrumbs;
     }
-
-    $: breadcrumbs = getBreadcrumbs();
-    $: console.log(breadcrumbs);
+    $: if ($page) {
+        breadcrumbs = getBreadcrumbs();
+    }
+    // $: breadcrumbs = getBreadcrumbs();
 </script>
 
 <div class="flex flex-col">
