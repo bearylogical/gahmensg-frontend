@@ -26,7 +26,7 @@
 					size="xl"
 					color="red"
 					class="inline-flex items-center justify-center mr-3"
-					href="/budget/overview"
+					href="/budget"
 					>Get started<ArrowRightOutline
 						size="md"
 						class="ml-2 -mr-1"
