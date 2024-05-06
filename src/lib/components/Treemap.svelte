@@ -30,6 +30,10 @@
             .hierarchy(stratifyData)
             .sum((d) => (d.data ? d.data.value_amount : 0))
             .sort((a, b) => b.value - a.value);
+        // add percentage of total
+        hierarchyData.each((d) => {
+            d.data.percentage = d.value / hierarchyData.value;
+        });
         return hierarchyData;
     }
 
@@ -42,6 +46,7 @@
         return false;
     }
     $: hierarchy = parseData(data);
+    $: console.log(hierarchy);
 
     function formatTitle(d) {
         return d.data.id.split("/").pop();
@@ -89,12 +94,12 @@
         class="px-2 py-2 hover:bg-slate-200 hover:text-slate-40 hover:rounded"
     >
         <div class="text-left">
-            <div class="text-xl">
+            <div class="text-2xl">
                 {item.data.id == "/"
                     ? "Government Expenditure"
                     : formatTitle(item)}
             </div>
-            <div class="text-xs font-light pb-2">
+            <div class="text-sm font-light pb-2">
                 {d3.format("$,")(item.value)}
             </div>
         </div>
@@ -189,6 +194,7 @@
         </Svg>
         <Tooltip
             header={(data) => formatTitle(data)}
+            anchor="left"
             classes={{
                 container: "bg-slate-50 dark:bg-slate-800",
                 header: "text-slate-40 dark:text-white text-left",
@@ -200,6 +206,12 @@
                 label="Expenditure"
                 value={data.value}
                 format="currency"
+                valueAlign="left"
+            />
+            <TooltipItem
+                label="% of Total"
+                value={data.data.percentage}
+                format="percent"
                 valueAlign="left"
             />
         </Tooltip>
