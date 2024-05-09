@@ -6,6 +6,7 @@
     import * as d3 from "d3";
     import Dashboard from "$lib/components/MinistryDashboard/Dashboard.svelte";
     import { parseValue } from "$lib/components/MinistryDashboard/utils.js";
+    import { WidgetPlaceholder } from "flowbite-svelte";
 
     export let data;
     let focusElement: HTMLElement;
@@ -100,7 +101,7 @@
     }
 
     async function fetchProjectDrillDown(selectedID) {
-        const queryURL = apiURL + "/budget/projects/" + selectedID;
+        const queryURL = apiURL + "/budget/" + selectedID + "/projects";
 
         const res = await fetch(queryURL).then((res) => res.json());
         return res;
@@ -164,6 +165,7 @@
                 if (tempYear && tempPrevYear) {
                     tempRes.push({
                         project_title: key,
+                        project_id: tempYear.project_id,
                         parent_header: tempYear[header_name],
                         value_amount: tempYear.value_amount,
                         value_type: tempYear.value_type,

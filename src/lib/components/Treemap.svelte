@@ -13,8 +13,8 @@
         TooltipItem,
         findAncestor,
     } from "layerchart";
-    import { cls, Button } from "svelte-ux";
-
+    import { cls, Button, table, round } from "svelte-ux";
+    import DataTable from "./DataTable.svelte";
     import { cubicOut } from "svelte/easing";
     import { fade } from "svelte/transition";
     import { scaleSequential, scaleOrdinal } from "d3-scale";
@@ -34,6 +34,7 @@
         hierarchyData.each((d) => {
             d.data.percentage = d.value / hierarchyData.value;
         });
+
         return hierarchyData;
     }
 
@@ -46,7 +47,6 @@
         return false;
     }
     $: hierarchy = parseData(data);
-    $: console.log(hierarchy);
 
     function formatTitle(d) {
         return d.data.id.split("/").pop();
@@ -54,8 +54,23 @@
 
     let tile = "binary";
     let colorBy = "parent";
+    let tableData = [];
 
     let selectedZoomable = null;
+
+    $: if (selectedZoomable) {
+        tableData = parseTableData(selectedZoomable);
+    }
+
+    function parseTableData(data: any) {
+        return data.children.map((d) => {
+            return {
+                name: d.data.id.split("/").pop(),
+                amount: d3.format("$,")(d.value),
+                percent_total: round(d.data.percentage * 100, 2),
+            };
+        });
+    }
 
     const sequentialColor = scaleSequential([3, -1], chromatic.interpolateGnBu);
     // filter out hard to see yellow and green
@@ -216,6 +231,15 @@
             />
         </Tooltip>
     </Chart>
+</div>
+<div class=" mx-auto py-10">
+    <div class="col-span-2 border shadow-md rounded-lg">
+        {#if selectedZoomable}
+            <div class="p-4">
+                <DataTable data={tableData} />
+            </div>
+        {/if}
+    </div>
 </div>
 
 <style>

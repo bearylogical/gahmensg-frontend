@@ -20,7 +20,7 @@
     // filter data based on selected ministry
 
     async function fetchMinistryLinks(id) {
-        let response = await fetch(apiURL + `/sgdi/links/${id}`);
+        let response = await fetch(apiURL + `/sgdi/${id}/links`);
         let res = await response.json();
         return res;
     }

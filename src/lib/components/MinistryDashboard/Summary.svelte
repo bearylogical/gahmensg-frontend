@@ -87,16 +87,19 @@
                             <div class="flex min-w-0 items-center">
                                 <div class="ml-3">
                                     <p
-                                        class="truncate font-medium text-gray-900 dark:text-white"
+                                        class="block truncate ... max-w-[400px] font-medium text-gray-900 dark:text-white hover:text-wrap"
                                     >
                                         {project_title}
                                     </p>
                                     {#if parent_header !== ""}
                                         <Badge
+                                            class="truncate ... max-w-[200px] text-center hover:opacity-70"
                                             rounded
                                             color={colorMap[parent_header]}
                                         >
-                                            {parent_header}
+                                            <span class="text-xs">
+                                                {parent_header}
+                                            </span>
                                         </Badge>
                                     {/if}
                                 </div>
@@ -122,6 +125,26 @@
                         </div>
                     </li>
                 {/each}
+                {#if personnelData.length < 5}
+                    {#each Array(5 - personnelData.length) as _}
+                        <li class="py-3 sm:py-4">
+                            <div class="flex items">
+                                <div class="ml-3">
+                                    <p
+                                        class="truncate font-medium text-gray-900 dark:text-white"
+                                    >
+                                        -
+                                    </p>
+                                    <span
+                                        class="text-xs text-gray-500 dark:text-gray-400"
+                                    >
+                                        -
+                                    </span>
+                                </div>
+                            </div>
+                        </li>
+                    {/each}
+                {/if}
             </ul>
         </TabItem>
         <TabItem class="w-full">
@@ -132,21 +155,29 @@
                 {#each projectData as { project_title, parent_header, value_amount, perc_diff, value_year }}
                     <li class="py-3 sm:py-4">
                         <div class="flex items-center justify-between">
-                            <div class="flex min-w-30 items-center">
-                                <div class="ml-3 truncate-ellipsis">
+                            <div class="flex min-w-0 items-center">
+                                <div class="ml-3">
                                     <p
-                                        class=" font-medium text-gray-900 dark:text-white"
+                                        class="block truncate ... max-w-[400px] font-medium text-gray-900 dark:text-white hover:text-wrap"
                                     >
-                                        {project_title}
+                                        <a
+                                            class="hover:text-red-800 after:content-['_↗'] ..."
+                                            href="https://www.
+apple.com/pro-display-xdr/"
+                                            target="_blank"
+                                        >
+                                            {project_title}</a
+                                        >
                                     </p>
                                     {#if parent_header !== ""}
                                         <Badge
+                                            class="block truncate ... max-w-[200px] text-center hover:opacity-70"
                                             rounded
                                             color={dynamicColorMap[
                                                 parent_header
                                             ]}
                                         >
-                                            <span class="text-wrap text-xs">
+                                            <span class="text-xs">
                                                 {parent_header}
                                             </span>
                                         </Badge>
@@ -174,6 +205,26 @@
                         </div>
                     </li>
                 {/each}
+                {#if projectData.length < 5}
+                    {#each Array(5 - projectData.length) as _}
+                        <li class="py-3 sm:py-4">
+                            <div class="flex items items-center">
+                                <div class="ml-3">
+                                    <p
+                                        class="truncate font-medium text-gray-900 dark:text-white"
+                                    >
+                                        -
+                                    </p>
+                                    <span
+                                        class="text-xs text-gray-500 dark:text-gray-400"
+                                    >
+                                        -
+                                    </span>
+                                </div>
+                            </div>
+                        </li>
+                    {/each}
+                {/if}
             </ul>
         </TabItem>
     </Tabs>

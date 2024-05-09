@@ -3,6 +3,7 @@
     import { chartOptions } from "./chart_options";
     import ExpenditureWidget from "./ExpenditureWidget.svelte";
     import Summary from "./Summary.svelte";
+    import { Card } from "flowbite-svelte";
     import {
         getPercentageDiff,
         getMostRecentYearData,
@@ -10,6 +11,7 @@
         getMostRecentYearDataNoSum,
     } from "./utils";
     import * as d3 from "d3";
+    import DataTable from "./DataTable.svelte";
 
     export let expenditureData;
     export let personnelData;
@@ -19,7 +21,6 @@
 
     let summaryProjectData: [];
     let summaryPersonnelData: [];
-
     let color = d3.scaleOrdinal(d3.schemeCategory10);
     let series = [];
     // filter data of "actual" and create a series
@@ -67,16 +68,14 @@
     }
 
     let chart_options = chartOptions;
+    let transformedPersonnelData;
+    let transformedProjectData;
+    $: transformedPersonnelData = getMostRecentYearDataNoSum(personnelData);
+    $: transformedProjectData = getMostRecentYearDataNoSum(projectData);
     // $: chart_options.xaxis.categories = createXAxis(data);
     $: chart_options.series = groupData(expenditureData);
-    $: summaryProjectData = getTopNData(
-        getMostRecentYearDataNoSum(projectData),
-        5,
-    );
-    $: summaryPersonnelData = getTopNData(
-        getMostRecentYearDataNoSum(personnelData),
-        5,
-    );
+    $: summaryProjectData = getTopNData(transformedProjectData, 5);
+    $: summaryPersonnelData = getTopNData(transformedPersonnelData, 5);
 
     // $: console.log(getTopNData(getMostRecentYearDataNoSum(projectData), 5));
 </script>
@@ -97,5 +96,12 @@
             personnelData={summaryPersonnelData}
             projectData={summaryProjectData}
         ></Summary>
+    </div>
+    <div class="col-span-2 border shadow-md rounded-lg">
+        <h2 class="text-2xl font-bold pl-6 pt-6">Project Expenditure</h2>
+        <p class="text-base font-light pl-6 text-gray-500 dark:text-gray-400">
+            Overview of project expenditure, sorted by amount
+        </p>
+        <DataTable data={transformedProjectData} />
     </div>
 </div>

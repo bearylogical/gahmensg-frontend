@@ -24,9 +24,15 @@ export function getPercentageDiff(data) {
 export function getTopNData(data, n) {
     // ensure n is an integer minimum 1
     n = Math.max(1, Math.floor(n));
-    return data
-        .sort((a, b) => b.value_amount - a.value_amount)
-        .slice(0, n);
+    data.sort((a, b) => b.value_amount - a.value_amount);
+    // don't slice if n is -1 or greater than the length of the data
+    if (n === -1 || n >= data.length) {
+        return data
+    } else {
+        // sort the data by value_amount and slice the top n
+        return data
+            .slice(0, n);
+    }
 }
 
 // create weights for each value_type
