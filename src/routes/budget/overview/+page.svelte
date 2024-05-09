@@ -2,7 +2,6 @@
     import { onMount } from "svelte";
     import { fetchBudgetOverview } from "$lib/utils/handlers";
     import Treemap from "$lib/components/Treemap.svelte";
-    import { Skeleton } from "$lib/components/ui/skeleton";
 
     let focusElement: HTMLElement;
 
