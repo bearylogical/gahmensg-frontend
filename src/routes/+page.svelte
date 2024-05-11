@@ -18,7 +18,7 @@
 			>
 			<svelte:fragment slot="paragraph"
 				>From insights on the annual Budget to Parliamentary discourse,
-				GahmenExplorer helps make available Singapore related data in a
+				GahmenExplorer attemps to present Singapore related data in a
 				simpler manner.</svelte:fragment
 			>
 			<a href="/"
