@@ -24,15 +24,8 @@
 </svelte:head>
 
 <div class="flex flex-col min-h-screen">
-	<Navbar
-		let:NavContainer
-		color="primary"
-		class="bg-white dark:bg-gray-950 border-b"
-	>
-		<NavContainer
-			class="px-2 py-2 rounded-lg bg-white dark:bg-gray-950 "
-			fluid={false}
-		>
+	<Navbar let:NavContainer color="primary" class="bg-white border-b">
+		<NavContainer class="px-2 py-2 rounded-lg bg-white" fluid={false}>
 			<NavBrand href="/">
 				<FluentBuildingGovernmentSearch32Regular class="w-8 h-8 me-3" />
 				<span
