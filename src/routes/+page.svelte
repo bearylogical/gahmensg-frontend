@@ -14,12 +14,12 @@
 			pClass="max-w-2xl mb-6 font-light text-gray-500 lg:mb-8 md:text-lg lg:text-xl dark:text-gray-400"
 		>
 			<svelte:fragment slot="h1"
-				>Gain insights on Singapore's Government</svelte:fragment
+				>Explore Singapore Public Data</svelte:fragment
 			>
 			<svelte:fragment slot="paragraph"
 				>From insights on the annual Budget to Parliamentary discourse,
-				GahmenExplorer can help enable civic discourse towards a more
-				engaged citizenry.</svelte:fragment
+				GahmenExplorer helps make available Singapore related data in a
+				simpler manner.</svelte:fragment
 			>
 			<a href="/"
 				><Button
