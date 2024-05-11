@@ -24,7 +24,11 @@
 </svelte:head>
 
 <div class="flex flex-col min-h-screen">
-	<Navbar let:NavContainer color="primary" class="dark:bg-gray-950 border-b">
+	<Navbar
+		let:NavContainer
+		color="primary"
+		class="bg-white dark:bg-gray-950 border-b"
+	>
 		<NavContainer
 			class="px-2 py-2 rounded-lg bg-white dark:bg-gray-950 "
 			fluid={false}
