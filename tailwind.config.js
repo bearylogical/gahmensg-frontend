@@ -2,7 +2,7 @@ import { fontFamily } from "tailwindcss/defaultTheme";
 
 /** @type {import('tailwindcss').Config} */
 const config = {
-	darkMode: 'selector',
+	darkMode: ['selector', '[data-mode="dark"]'],
 	content: ["./src/**/*.{html,js,svelte,ts}", './node_modules/flowbite-svelte/**/*.{html,js,svelte,ts}', './node_modules/svelte-ux/**/*.{svelte,js}',
 		'./node_modules/layerchart/**/*.{svelte,js}'],
 	theme: {

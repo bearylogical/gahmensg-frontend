@@ -111,7 +111,7 @@
             Overview of <span class="italic underline">estimated</span> programme
             expenditure, sorted by amount.
         </p>
-        <hr class="h-px my-6 bg-gray-200 border-0 dark:bg-gray-700" />
+        <hr class="h-px my-6 bg-gray-200 border-0" />
         <div class="pl-4 pr-4">
             {#if transformedProjectData.length > 0}
                 <ProgrammeTreemap data={transformedProgrammesData} />
@@ -128,7 +128,7 @@
             Overview of <span class="italic underline">estimated</span> project expenditure,
             sorted by amount.
         </p>
-        <hr class="h-px my-6 bg-gray-200 border-0 dark:bg-gray-700" />
+        <hr class="h-px my-6 bg-gray-200 border-0" />
         <div class="pl-4 pr-4">
             {#if transformedProjectData.length > 0}
                 <ProjectTreemap data={transformedProjectData} />
@@ -145,7 +145,7 @@
             Overview of <span class="italic underline">estimated</span> headcount
             by category, arranged by number of personnel.
         </p>
-        <hr class="h-px my-6 bg-gray-200 border-0 dark:bg-gray-700" />
+        <hr class="h-px my-6 bg-gray-200 border-0" />
         <div class="pl-4 pr-4">
             {#if transformedPersonnelData.length > 0}
                 <PersonnelTreemap data={transformedPersonnelData} />
