@@ -160,14 +160,12 @@
                                     <p
                                         class="block truncate ... max-w-[400px] font-medium text-gray-900 dark:text-white hover:text-wrap"
                                     >
-                                        <a
+                                        <!-- <a
                                             class="hover:text-red-800 after:content-['_↗'] ..."
-                                            href="https://www.
-apple.com/pro-display-xdr/"
+                                            href="/"
                                             target="_blank"
-                                        >
-                                            {project_title}</a
-                                        >
+                                        > -->
+                                        {project_title}
                                     </p>
                                     {#if parent_header !== ""}
                                         <Badge

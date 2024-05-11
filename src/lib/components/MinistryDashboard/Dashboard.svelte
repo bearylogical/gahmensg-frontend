@@ -11,11 +11,16 @@
         getMostRecentYearDataNoSum,
     } from "./utils";
     import * as d3 from "d3";
-    import DataTable from "./DataTable.svelte";
+    import ProgrammeTreemap from "./ProgrammeTreemap.svelte";
+    import PersonnelTreemap from "./PersonnelTreemap.svelte";
+    import PersonnelDataTable from "./PersonnelDataTable.svelte";
+    import ProjectTreemap from "./ProjectTreemap.svelte";
+    import ProjectDataTable from "./ProjectDataTable.svelte";
 
     export let expenditureData;
     export let personnelData;
     export let projectData;
+    export let programmesData;
     export let title;
     export let subtitle;
 
@@ -70,13 +75,16 @@
     let chart_options = chartOptions;
     let transformedPersonnelData;
     let transformedProjectData;
+    let transformedProgrammesData;
+    let hierarchyProjectData;
     $: transformedPersonnelData = getMostRecentYearDataNoSum(personnelData);
     $: transformedProjectData = getMostRecentYearDataNoSum(projectData);
+    $: transformedProgrammesData = getMostRecentYearDataNoSum(programmesData);
     // $: chart_options.xaxis.categories = createXAxis(data);
     $: chart_options.series = groupData(expenditureData);
     $: summaryProjectData = getTopNData(transformedProjectData, 5);
     $: summaryPersonnelData = getTopNData(transformedPersonnelData, 5);
-
+    // $: console.log(transformedProgrammesData);
     // $: console.log(getTopNData(getMostRecentYearDataNoSum(projectData), 5));
 </script>
 
@@ -98,10 +106,54 @@
         ></Summary>
     </div>
     <div class="col-span-2 border shadow-md rounded-lg">
+        <h2 class="text-2xl font-bold pl-6 pt-6">Programme Expenditure</h2>
+        <p class="text-base font-light pl-6 text-gray-500 dark:text-gray-400">
+            Overview of <span class="italic underline">estimated</span> programme
+            expenditure, sorted by amount.
+        </p>
+        <hr class="h-px my-6 bg-gray-200 border-0 dark:bg-gray-700" />
+        <div class="pl-4 pr-4">
+            {#if transformedProjectData.length > 0}
+                <ProgrammeTreemap data={transformedProgrammesData} />
+            {:else}
+                <div class="p-2">
+                    <ProjectDataTable data={transformedProgrammesData} />
+                </div>
+            {/if}
+        </div>
+    </div>
+    <div class="col-span-2 border shadow-md rounded-lg">
         <h2 class="text-2xl font-bold pl-6 pt-6">Project Expenditure</h2>
         <p class="text-base font-light pl-6 text-gray-500 dark:text-gray-400">
-            Overview of project expenditure, sorted by amount
+            Overview of <span class="italic underline">estimated</span> project expenditure,
+            sorted by amount.
         </p>
-        <DataTable data={transformedProjectData} />
+        <hr class="h-px my-6 bg-gray-200 border-0 dark:bg-gray-700" />
+        <div class="pl-4 pr-4">
+            {#if transformedProjectData.length > 0}
+                <ProjectTreemap data={transformedProjectData} />
+            {:else}
+                <div class="p-2">
+                    <ProjectDataTable data={transformedProjectData} />
+                </div>
+            {/if}
+        </div>
+    </div>
+    <div class="col-span-2 border shadow-md rounded-lg">
+        <h2 class="text-2xl font-bold pl-6 pt-6">Personnel Counts</h2>
+        <p class="text-base font-light pl-6 text-gray-500 dark:text-gray-400">
+            Overview of <span class="italic underline">estimated</span> headcount
+            by category, arranged by number of personnel.
+        </p>
+        <hr class="h-px my-6 bg-gray-200 border-0 dark:bg-gray-700" />
+        <div class="pl-4 pr-4">
+            {#if transformedPersonnelData.length > 0}
+                <PersonnelTreemap data={transformedPersonnelData} />
+            {:else}
+                <div class="p-2">
+                    <PersonnelDataTable data={transformedPersonnelData} />
+                </div>
+            {/if}
+        </div>
     </div>
 </div>

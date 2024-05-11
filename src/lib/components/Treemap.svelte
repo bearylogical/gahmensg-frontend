@@ -23,8 +23,14 @@
     import { hsl } from "d3-color";
     import * as d3 from "d3";
     export let data;
-
     function parseData(data) {
+        // only select unique object paths
+        data = data.filter(
+            (d, i, self) =>
+                i === self.findIndex((t) => t.object_path === d.object_path),
+        );
+        // reject data with object_code == 9999
+        data = data.filter((d) => d.object_code !== "9999");
         const stratifyData = d3.stratify().path((d) => d.object_path)(data);
         const hierarchyData = d3
             .hierarchy(stratifyData)
@@ -178,7 +184,7 @@
                                                     "text-md",
                                                     colorBy === "children"
                                                         ? "fill-primary-content"
-                                                        : "fill-black",
+                                                        : "fill-slate-50 stroke-slate-200k",
                                                 )}
                                                 verticalAnchor="start"
                                                 x={10}
@@ -192,7 +198,7 @@
                                                     "text-sm font-extralight text-wrap",
                                                     colorBy === "children"
                                                         ? "fill-primary-content"
-                                                        : "fill-black",
+                                                        : "fill-slate-50 stroke-slate-200",
                                                 )}
                                                 verticalAnchor="start"
                                                 x={10}

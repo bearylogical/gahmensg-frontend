@@ -29,4 +29,16 @@
     {:catch error}
         <div>Error: {error.message}</div>
     {/await}
+    <div>
+        <h3 class="text-2xl font-light">Data Source</h3>
+        <span class="text-sm font-light text-gray-500 dark:text-gray-400"
+            >Expenditure data is sourced from the <a
+                class="text-blue-600 after:content-['_↗'] ..."
+                href="https://www.mof.gov.sg/singaporebudget"
+                target="_blank"
+            >
+                Ministry of Finance (MOF) Singapore Budget website
+            </a>
+        </span>
+    </div>
 </div>

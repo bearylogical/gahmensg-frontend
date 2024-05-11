@@ -15,6 +15,7 @@
     let drillDownData: [] = [];
     let personnelData: [] = [];
     let projectData: [] = [];
+    let programmesData: [] = [];
     let filteredData: [];
     let disableSelect = true;
     let pivotExpenditureData = [];
@@ -107,6 +108,13 @@
         return res;
     }
 
+    async function fetchProgrammesDrillDown(selectedID) {
+        const queryURL = apiURL + "/budget/" + selectedID + "/programmes";
+
+        const res = await fetch(queryURL).then((res) => res.json());
+        return res;
+    }
+
     function fetchHandler() {
         fetchExpenditureDrillDown(selectedAgency, selectedID).then((res) => {
             drillDownData = res;
@@ -129,6 +137,19 @@
                 projectData,
                 "project_title",
                 "parent_header",
+            );
+        });
+        fetchProgrammesDrillDown(selectedAgency, selectedID).then((res) => {
+            programmesData = filterData(res);
+            // filter for value_name = "Total Expenditure"
+            programmesData = programmesData.filter(
+                (d) => d.value_name === "Total Expenditure",
+            );
+
+            programmesData = getProjectDiff(
+                programmesData,
+                "programme_title",
+                "value_name",
             );
         });
     }
@@ -169,11 +190,14 @@
                         parent_header: tempYear[header_name],
                         value_amount: tempYear.value_amount,
                         value_type: tempYear.value_type,
+                        // handle division by zero
                         perc_diff:
-                            ((tempYear.value_amount -
-                                tempPrevYear.value_amount) /
-                                tempPrevYear.value_amount) *
-                            100,
+                            tempPrevYear.value_amount !== 0
+                                ? ((tempYear.value_amount -
+                                      tempPrevYear.value_amount) /
+                                      tempPrevYear.value_amount) *
+                                  100
+                                : 0,
                         value_year: year,
                     });
                 }
@@ -350,6 +374,7 @@
                     expenditureData={pivotExpenditureData}
                     {personnelData}
                     {projectData}
+                    {programmesData}
                     title={selectedID}
                     subtitle="Expenditure by year"
                 />
@@ -361,6 +386,17 @@
                 </div>
             {/if}
         </div>
-        <div class="grid gap-4 md:col-span-1 sm:col-span-1"></div>
+    </div>
+    <div>
+        <h3 class="text-2xl font-light">Data Source</h3>
+        <span class="text-sm font-light text-gray-500 dark:text-gray-400"
+            >Expenditure data is sourced from the <a
+                class="text-blue-600 after:content-['_↗'] ..."
+                href="https://www.mof.gov.sg/singaporebudget"
+                target="_blank"
+            >
+                Ministry of Finance (MOF) Singapore Budget website
+            </a>
+        </span>
     </div>
 </div>

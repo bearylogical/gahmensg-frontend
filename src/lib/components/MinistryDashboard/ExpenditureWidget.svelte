@@ -13,7 +13,7 @@
 <Card size="xl" class="w-full max-w-none h-fit">
     <div class="mb-6 flex items-center justify-between">
         <div class="flex-shrink-0">
-            <Heading tag="h3" class="text-2xl">{title}</Heading>
+            <Heading tag="h3" class="text-2xl truncate ...">{title}</Heading>
             <p class="text-base font-light text-gray-500 dark:text-gray-400">
                 {subtitle}
             </p>

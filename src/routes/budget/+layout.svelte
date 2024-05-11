@@ -1,5 +1,6 @@
 <script lang="ts">
     import * as Breadcrumb from "$lib/components/ui/breadcrumb/index.js";
+    import { HomeSolid } from "flowbite-svelte-icons";
     import { page } from "$app/stores";
 
     let breadcrumbs: { label: string; link: string }[] = [];
@@ -40,16 +41,41 @@
                             <Breadcrumb.Item
                                 class="pt-3 pb-3 text-xl font-semibold text-gray-300"
                             >
-                                <Breadcrumb.Link
-                                    class="hover:text-gray-300"
-                                    href={breadcrumb.link}
-                                    >{breadcrumb.label}</Breadcrumb.Link
-                                >
+                                {#if idx === 0}
+                                    <Breadcrumb.Link
+                                        class="hover:text-gray-300"
+                                        href={breadcrumb.link}
+                                    >
+                                        <div>
+                                            <HomeSolid
+                                                class="w-6 h-6 inline margin-right-2 mb-1.5"
+                                            />
+                                            {breadcrumb.label}
+                                        </div>
+                                    </Breadcrumb.Link>
+                                {:else}
+                                    <Breadcrumb.Link
+                                        class="hover:text-gray-300"
+                                        href={breadcrumb.link}
+                                        >{breadcrumb.label}</Breadcrumb.Link
+                                    >
+                                {/if}
                             </Breadcrumb.Item>
 
                             <Breadcrumb.Separator
                                 class="pt-3 pb-3 text-xl font-semibold text-white"
                             />
+                        {:else if idx === 0}
+                            <Breadcrumb.Page
+                                class="pt-3 pb-3 text-xl font-semibold text-white"
+                            >
+                                <div>
+                                    <HomeSolid
+                                        class="w-6 h-6 inline margin-right-2 mb-1.5"
+                                    />
+                                    {breadcrumb.label}
+                                </div>
+                            </Breadcrumb.Page>
                         {:else}
                             <Breadcrumb.Page
                                 class="pt-3 pb-3 text-xl font-semibold text-white"

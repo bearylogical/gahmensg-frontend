@@ -132,6 +132,17 @@
                         various government sources and is processed and
                         visualized using D3.js. The backend that powers the site
                         is written in Golang.
+                        <br />
+                        <br />
+                        A brief technical writeup of the data sourcing process is
+                        available
+                        <a
+                            class="text-blue-600 after:content-['_↗'] ..."
+                            href="https://bearylogical.net/post/parsing-budgetsg-with-aws-textract/"
+                            target="_blank"
+                        >
+                            on my personal blog
+                        </a>.
                     </Accordion.Content>
                 </Accordion.Item>
             </Accordion.Root>

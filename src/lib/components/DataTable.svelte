@@ -13,9 +13,11 @@
         <table class="table-fixed">
             <thead>
                 <tr>
-                    <th>Item</th>
-                    <th>Amount (SGD)</th>
-                    <th>% of Overall Expenditure</th>
+                    <Th {handler} orderBy="name">Item</Th>
+                    <Th {handler} orderBy="amount">Amount (SGD)</Th>
+                    <Th {handler} orderBy="percent_total"
+                        >% of Overall Expenditure</Th
+                    >
                 </tr>
                 <tr>
                     <ThFilter {handler} filterBy="name" />
