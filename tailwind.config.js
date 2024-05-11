@@ -4,7 +4,6 @@ import { fontFamily } from "tailwindcss/defaultTheme";
 const config = {
 	// darkMode: 'selector',
 	content: ["./src/**/*.{html,js,svelte,ts}", './node_modules/flowbite-svelte/**/*.{html,js,svelte,ts}', './node_modules/svelte-ux/**/*.{svelte,js}',
-		"./node_modules/flowbite-svelte-icons/**/*.{html,js,svelte,ts}",
 		'./node_modules/layerchart/**/*.{svelte,js}'],
 	// safelist: ["dark"],
 	theme: {
