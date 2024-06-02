@@ -2,17 +2,18 @@
     /** @type {import('./$types').PageData} */
     import * as Select from "$lib/components/ui/select";
     import * as Card from "$lib/components/ui/card/index.js";
-    import { apiURL } from "$lib/utils/constants.js";
+    import { apiURL, apiURLV2 } from "$lib/utils/constants.js";
     import * as d3 from "d3";
     import Dashboard from "$lib/components/MinistryDashboard/Dashboard.svelte";
-    import { parseValue } from "$lib/components/MinistryDashboard/utils.js";
-    import { WidgetPlaceholder } from "flowbite-svelte";
+    // import { parseValue } from "$lib/components/MinistryDashboard/utils.js";
+    // import { WidgetPlaceholder } from "flowbite-svelte";
 
     export let data;
     let focusElement: HTMLElement;
     let selectedAgency = "";
     let selectedID: number;
     let drillDownData: [] = [];
+    let ministryData;
     let personnelData: [] = [];
     let projectData: [] = [];
     let programmesData: [] = [];
@@ -20,14 +21,13 @@
     let disableSelect = true;
     let pivotExpenditureData = [];
     let pivotPersonnelData = [];
-    let recentYear: number;
+    let recentBudgetYear: number;
 
     // default the agency to the first
     $: if (data.agencies.length > 0) {
         selectedAgency = data.agencies[0].id;
         selectedID = data.agencies[0].name;
     }
-
     // create weights for each value_type
     const weight = {
         ACTUAL: 1,
@@ -86,61 +86,42 @@
         });
     }
 
-    async function fetchExpenditureDrillDown(selectedID) {
-        const queryURL = apiURL + "/budget/" + selectedID;
-
-        const res = await fetch(queryURL).then((res) => res.json());
-        return res;
-    }
-
-    async function fetchPersonnelDrillDown(selectedID) {
+    async function fetchMinistryData(selectedID) {
         const queryURL =
-            apiURL + "/personnel?ministryID=" + selectedID + "&startYear=2019";
+            apiURLV2 + "/budget?ministryID=" + selectedID + "&startYear=2019";
 
         const res = await fetch(queryURL).then((res) => res.json());
         return res;
     }
 
-    async function fetchProjectDrillDown(selectedID) {
-        const queryURL = apiURL + "/budget/" + selectedID + "/projects";
+    function fetchHandler(selectedAgency) {
+        fetchMinistryData(selectedAgency).then((res) => {
+            ministryData = res;
+            drillDownData = ministryData.ministry_expenditures;
+            personnelData = ministryData.ministry_personnel;
+            projectData = ministryData.project_expenditures;
+            programmesData = ministryData.programme_expenditures;
 
-        const res = await fetch(queryURL).then((res) => res.json());
-        return res;
-    }
+            recentBudgetYear =
+                drillDownData.length > 0
+                    ? getMostRecentYearData(drillDownData).value_year
+                    : 2024;
 
-    async function fetchProgrammesDrillDown(selectedID) {
-        const queryURL = apiURL + "/budget/" + selectedID + "/programmes";
-
-        const res = await fetch(queryURL).then((res) => res.json());
-        return res;
-    }
-
-    function fetchHandler() {
-        fetchExpenditureDrillDown(selectedAgency, selectedID).then((res) => {
-            drillDownData = res;
-        });
-        recentYear =
-            drillDownData.length > 0
-                ? getMostRecentYearData(drillDownData).value_year
-                : 2024;
-        fetchPersonnelDrillDown(selectedAgency, selectedID).then((res) => {
-            personnelData = filterData(res);
+            personnelData = filterData(personnelData);
             personnelData = getProjectDiff(
                 personnelData,
                 "personnel_type",
                 "category",
             );
-        });
-        fetchProjectDrillDown(selectedAgency, selectedID).then((res) => {
-            projectData = filterData(res);
+
+            projectData = filterData(projectData);
             projectData = getProjectDiff(
                 projectData,
                 "project_title",
                 "parent_header",
             );
-        });
-        fetchProgrammesDrillDown(selectedAgency, selectedID).then((res) => {
-            programmesData = filterData(res);
+
+            programmesData = filterData(programmesData);
             // filter for value_name = "Total Expenditure"
             programmesData = programmesData.filter(
                 (d) => d.value_name === "Total Expenditure",
@@ -240,7 +221,7 @@
     //group drilldown by value_type and year and sum the value_amount
 
     $: if (selectedAgency && selectedID) {
-        fetchHandler();
+        fetchHandler(selectedAgency);
     }
     // $: console.log(pivotPersonnelData);
 </script>
@@ -249,7 +230,7 @@
     class="grid auto-rows-max items-start gap-4 md:gap-8 mx-auto container pt-6"
     bind:this={focusElement}
 >
-    <div class="grid gap-4 sm:grid-cols-1 md:grid-cols-4">
+    <div class="grid gap-y-4 sm:grid-cols-1 md:grid-cols-4 sm:gap-4">
         <Card.Root class="md:col-span-2 sm:col-span-1">
             <Card.Header>
                 <Card.Title>Explore expenditure by Ministry</Card.Title>
@@ -259,115 +240,122 @@
                 >
             </Card.Header>
             <Card.Content>
-                <div class="grid grid-cols-2 gap-10">
-                    <div class="col-span-1">
-                        <p class="text-sm pb-2">Ministry / Agency</p>
-                        <Select.Root
-                            typeahead={true}
-                            onSelectedChange={(agency) => {
-                                selectMinistryHandler(agency);
-                                focusElement.scrollIntoView({
-                                    behavior: "smooth",
-                                    block: "start",
-                                });
-                            }}
-                        >
-                            <Select.Trigger>
-                                <Select.Value placeholder={selectedID} />
-                            </Select.Trigger>
-                            <Select.Content
-                                class="overflow-y-auto max-h-[20rem]"
-                                sideOffset={8}
-                            >
-                                {#each data.agencies as agency}
-                                    <Select.Item
-                                        value={agency.id}
-                                        label={agency.name}
-                                    >
-                                        {agency.name}
-                                    </Select.Item>
-                                {/each}
-                            </Select.Content>
-                        </Select.Root>
-                    </div>
-                </div>
+                <Select.Root
+                    typeahead={true}
+                    onSelectedChange={(agency) => {
+                        selectMinistryHandler(agency);
+                        focusElement.scrollIntoView({
+                            behavior: "smooth",
+                            block: "start",
+                        });
+                    }}
+                >
+                    <Select.Trigger>
+                        <Select.Value placeholder={selectedID} />
+                    </Select.Trigger>
+                    <Select.Content
+                        class="overflow-y-auto max-h-[20rem]"
+                        sideOffset={8}
+                    >
+                        {#each data.agencies as agency}
+                            <Select.Item value={agency.id} label={agency.name}>
+                                {agency.name}
+                            </Select.Item>
+                        {/each}
+                    </Select.Content>
+                </Select.Root>
             </Card.Content>
         </Card.Root>
-        <Card.Root class="col-span-1">
-            <Card.Header>
-                <Card.Description
-                    >Estd. Expenditure {#if pivotExpenditureData.length > 0}
-                        ({getMostRecentYearData(pivotExpenditureData)
-                            .value_year})
-                    {/if}
-                </Card.Description>
-                <Card.Title class="text-4xl ">
-                    {#if pivotExpenditureData.length > 0}
-                        {d3
-                            .format(
-                                "$.3s",
-                            )(getMostRecentYearData(pivotExpenditureData).value_amount)
-                            .replace("G", "B")}
-                    {:else}
-                        No Agency Selected
-                    {/if}
-                </Card.Title>
-            </Card.Header>
-            <Card.Content>
-                <div class="text-xs text-muted-foreground">
-                    {#if pivotExpenditureData.length > 0}
-                        <span class={getArrowColor(pivotExpenditureData)}>
-                            {getArrow(pivotExpenditureData)}{getPercentageDiff(
-                                pivotExpenditureData,
-                            ).toFixed(2)}%
-                        </span>
-                        from last year ({getMostRecentYearData(
-                            pivotExpenditureData,
-                        ).value_year - 1})
-                    {:else}
-                        No Agency Selected
-                    {/if}
-                </div>
-            </Card.Content>
-            <Card.Footer></Card.Footer>
-        </Card.Root>
-        <Card.Root class="col-span-1">
-            <Card.Header>
-                <Card.Description
-                    >Estd. Personnel Count {#if pivotPersonnelData.length > 0}
-                        ({getMostRecentYearData(pivotPersonnelData).value_year})
-                    {/if}
-                </Card.Description>
-                <Card.Title class="text-4xl ">
-                    {#if pivotPersonnelData.length > 0}
-                        {d3
-                            .format(
-                                ".2s",
-                            )(getMostRecentYearData(pivotPersonnelData).value_amount)
-                            .replace("G", "B")}
-                    {:else}
-                        No Agency Selected
-                    {/if}
-                </Card.Title>
-            </Card.Header>
-            <Card.Content>
-                <div class="text-xs text-muted-foreground">
-                    {#if pivotPersonnelData.length > 0}
-                        <span class={getArrowColor(pivotPersonnelData)}>
-                            {getArrow(pivotPersonnelData)}{getPercentageDiff(
-                                pivotPersonnelData,
-                            ).toFixed(2)}%
-                        </span>
-                        from last year ({getMostRecentYearData(
-                            pivotPersonnelData,
-                        ).value_year - 1})
-                    {:else}
-                        No Agency Selected
-                    {/if}
-                </div>
-            </Card.Content>
-            <Card.Footer></Card.Footer>
-        </Card.Root>
+        <!-- expenditure and personnel summary section -->
+        <div class="col-span-2">
+            <div class="grid gap-4 grid-cols-2 sm:grid-cols-2">
+                <!-- expenditure summary section -->
+                <Card.Root class="col-span-1">
+                    <Card.Header>
+                        <Card.Description
+                            >Estd. Expenditure {#if pivotExpenditureData.length > 0}
+                                ({getMostRecentYearData(pivotExpenditureData)
+                                    .value_year})
+                            {/if}
+                        </Card.Description>
+                        <Card.Title class="text-4xl ">
+                            {#if pivotExpenditureData.length > 0}
+                                {d3
+                                    .format(
+                                        "$.3s",
+                                    )(getMostRecentYearData(pivotExpenditureData).value_amount)
+                                    .replace("G", "B")}
+                            {:else}
+                                No Agency Selected
+                            {/if}
+                        </Card.Title>
+                    </Card.Header>
+                    <Card.Content>
+                        <div class="text-xs text-muted-foreground">
+                            {#if pivotExpenditureData.length > 0}
+                                <span
+                                    class={getArrowColor(pivotExpenditureData)}
+                                >
+                                    {getArrow(
+                                        pivotExpenditureData,
+                                    )}{getPercentageDiff(
+                                        pivotExpenditureData,
+                                    ).toFixed(2)}%
+                                </span>
+                                from last year ({getMostRecentYearData(
+                                    pivotExpenditureData,
+                                ).value_year - 1})
+                            {:else}
+                                No Agency Selected
+                            {/if}
+                        </div>
+                    </Card.Content>
+                    <Card.Footer></Card.Footer>
+                </Card.Root>
+                <!-- personnel summary section -->
+                <Card.Root class="col-span-1">
+                    <Card.Header>
+                        <Card.Description
+                            >Estd. Personnel Count {#if pivotPersonnelData.length > 0}
+                                ({getMostRecentYearData(pivotPersonnelData)
+                                    .value_year})
+                            {/if}
+                        </Card.Description>
+                        <Card.Title class="text-4xl ">
+                            {#if pivotPersonnelData.length > 0}
+                                {d3
+                                    .format(
+                                        ".2s",
+                                    )(getMostRecentYearData(pivotPersonnelData).value_amount)
+                                    .replace("G", "B")}
+                            {:else}
+                                No Agency Selected
+                            {/if}
+                        </Card.Title>
+                    </Card.Header>
+                    <Card.Content>
+                        <div class="text-xs text-muted-foreground">
+                            {#if pivotPersonnelData.length > 0}
+                                <span class={getArrowColor(pivotPersonnelData)}>
+                                    {getArrow(
+                                        pivotPersonnelData,
+                                    )}{getPercentageDiff(
+                                        pivotPersonnelData,
+                                    ).toFixed(2)}%
+                                </span>
+                                from last year ({getMostRecentYearData(
+                                    pivotPersonnelData,
+                                ).value_year - 1})
+                            {:else}
+                                No Agency Selected
+                            {/if}
+                        </div>
+                    </Card.Content>
+                    <Card.Footer></Card.Footer>
+                </Card.Root>
+            </div>
+        </div>
+
         <div class="md:col-span-4 sm:col-span-1">
             {#if drillDownData.length > 0}
                 <Dashboard

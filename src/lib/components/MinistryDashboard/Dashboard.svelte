@@ -89,7 +89,7 @@
 </script>
 
 <div class="grid md:grid-cols-2 sm:grid-cols-1 gap-4">
-    <div class="col-span-1">
+    <div class="lg:col-span-1 col-span-2">
         <ExpenditureWidget
             chartOptions={chart_options}
             {title}
@@ -99,7 +99,7 @@
                 (getMostRecentYearData(expenditureData).value_year - 1)}
         />
     </div>
-    <div class="col-span-1">
+    <div class="lg:col-span-1 col-span-2">
         <Summary
             personnelData={summaryPersonnelData}
             projectData={summaryProjectData}
