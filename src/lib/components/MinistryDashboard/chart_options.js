@@ -1,5 +1,6 @@
 import * as d3 from 'd3';
 
+
 export let mainChartColors = {
     borderColor: '#E5E7EB',
     labelColor: '#6B7280',
@@ -15,7 +16,6 @@ function formatYAxis(value) {
 
 export let chartOptions = {
     chart: {
-        height: 420,
         type: 'area',
         fontFamily: 'Inter, sans-serif',
         foreColor: mainChartColors.labelColor,
@@ -72,11 +72,14 @@ export let chartOptions = {
     xaxis: {
         tickPlacement: 'on',
         labels: {
+            rotateAlways: true,
+            rotate: -45,
             style: {
                 colors: [mainChartColors.labelColor],
                 fontSize: '14px',
                 fontWeight: 500
-            }
+            },
+
         },
         axisBorder: {
             color: mainChartColors.borderColor
@@ -125,9 +128,11 @@ export let chartOptions = {
                 xaxis: {
                     labels: {
                         show: false
-                    }
+                    },
+                    rotate: 45
                 }
             }
         }
     ]
+
 };

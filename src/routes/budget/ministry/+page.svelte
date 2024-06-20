@@ -227,7 +227,7 @@
 </script>
 
 <div
-    class="grid auto-rows-max items-start gap-4 md:gap-8 mx-auto container pt-6"
+    class="grid auto-rows-max items-start gap-4 md:gap-8 container pt-6 w-screen"
     bind:this={focusElement}
 >
     <div class="grid gap-y-4 sm:grid-cols-1 md:grid-cols-4 sm:gap-4">
@@ -268,9 +268,9 @@
         </Card.Root>
         <!-- expenditure and personnel summary section -->
         <div class="col-span-2">
-            <div class="grid gap-4 grid-cols-2 sm:grid-cols-2">
+            <div class="grid gap-4 grid-cols-1 md:grid-cols-2">
                 <!-- expenditure summary section -->
-                <Card.Root class="col-span-1">
+                <Card.Root class="col-span-1 ">
                     <Card.Header>
                         <Card.Description
                             >Estd. Expenditure {#if pivotExpenditureData.length > 0}
@@ -313,7 +313,7 @@
                     <Card.Footer></Card.Footer>
                 </Card.Root>
                 <!-- personnel summary section -->
-                <Card.Root class="col-span-1">
+                <Card.Root class="col-span-1 ">
                     <Card.Header>
                         <Card.Description
                             >Estd. Personnel Count {#if pivotPersonnelData.length > 0}

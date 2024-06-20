@@ -8,6 +8,7 @@
         { label: "BudgetGoWhere", link: "/budget" },
         { label: "Ministries", link: "/budget/ministry" },
         { label: "Overview", link: "/budget/overview" },
+        { label: "Projects", link: "/budget/project" },
     ];
 
     function getBreadcrumbs() {
@@ -21,6 +22,9 @@
         } else if (currentPage === "/budget/overview") {
             breadcrumbs.push(navCrumbs[0]);
             breadcrumbs.push(navCrumbs[2]);
+        } else if (currentPage === "/budget/project") {
+            breadcrumbs.push(navCrumbs[0]);
+            breadcrumbs.push(navCrumbs[3]);
         }
 
         return breadcrumbs;

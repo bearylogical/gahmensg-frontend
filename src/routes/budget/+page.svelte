@@ -72,7 +72,27 @@
                 </div>
             </Card.Content>
         </Card.Root>
-        <div class="box">
+        <Card.Root class="bg-slate-200 ">
+            <Card.Header>
+                <div class="flex justify-center">
+                    <ClipboardOutline
+                        strokeWidth="1.5"
+                        class="h-24 w-24 mr-2 justify-center"
+                    ></ClipboardOutline>
+                </div>
+
+                <Card.Title class="text-2xl text-center">Projects</Card.Title>
+                <Card.Description class="text-xl text-center truncate ..."
+                    >See in-depth spending by projects</Card.Description
+                >
+            </Card.Header>
+            <Card.Content>
+                <div class="flex justify-center">
+                    <Button color="primary" href="/budget/project">View</Button>
+                </div>
+            </Card.Content>
+        </Card.Root>
+        <!-- <div class="box">
             <div class="ribbon ribbon-top-right">
                 <span>Coming Soon</span>
             </div>
@@ -98,7 +118,7 @@
                     </div>
                 </Card.Content>
             </Card.Root>
-        </div>
+        </div> -->
     </div>
 </div>
 

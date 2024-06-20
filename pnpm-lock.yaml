@@ -11,6 +11,9 @@ dependencies:
   '@panzoom/panzoom':
     specifier: ^4.5.1
     version: 4.5.1
+  '@tailwindcss/line-clamp':
+    specifier: ^0.4.4
+    version: 0.4.4(tailwindcss@3.4.3)
   bits-ui:
     specifier: ^0.21.2
     version: 0.21.2(svelte@4.2.12)
@@ -53,6 +56,9 @@ dependencies:
   mode-watcher:
     specifier: ^0.3.0
     version: 0.3.0(svelte@4.2.12)
+  paneforge:
+    specifier: ^0.0.5
+    version: 0.0.5(svelte@4.2.12)
   svelte-ux:
     specifier: ^0.62.8
     version: 0.62.8(postcss-load-config@5.0.3)(postcss@8.4.38)(svelte@4.2.12)
@@ -835,6 +841,14 @@ packages:
     resolution: {integrity: sha512-lruDGw3pnfM3wmZHeW7JuhkGQaJjPyiKjxeGhdmfoOT53Ic9qb5JLDNaK2HUdl1zLDeX28H221UvKjfdvSLVMg==}
     dependencies:
       tslib: 2.6.2
+    dev: false
+
+  /@tailwindcss/line-clamp@0.4.4(tailwindcss@3.4.3):
+    resolution: {integrity: sha512-5U6SY5z8N42VtrCrKlsTAA35gy2VSyYtHWCsg1H87NU1SXnEfekTVlrga9fzUDrrHcGi2Lb5KenUWb4lRQT5/g==}
+    peerDependencies:
+      tailwindcss: '>=2.0.0 || >=3.0.0 || >=3.0.0-alpha.1'
+    dependencies:
+      tailwindcss: 3.4.3
     dev: false
 
   /@types/cookie@0.6.0:
@@ -2239,6 +2253,15 @@ packages:
     dependencies:
       p-limit: 3.1.0
     dev: true
+
+  /paneforge@0.0.5(svelte@4.2.12):
+    resolution: {integrity: sha512-98QHobaN/KeQhqqglbvjUmNCTRC4h4iqDxpSV8jCGhRLttgGlRXZNzWNr4Firni5rwasAZjOza0k/JdwppB/AQ==}
+    peerDependencies:
+      svelte: ^4.0.0 || ^5.0.0-next.1
+    dependencies:
+      nanoid: 5.0.6
+      svelte: 4.2.12
+    dev: false
 
   /parent-module@1.0.1:
     resolution: {integrity: sha512-GQ2EWRpQV8/o+Aw8YqtfZZPfNRWZYkbidE9k5rpl/hC3vtHHBfGm2Ifi6qWV+coDGkrUKZAxE3Lot5kcsRlh+g==}

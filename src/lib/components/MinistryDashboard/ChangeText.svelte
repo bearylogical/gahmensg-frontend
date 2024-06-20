@@ -35,22 +35,26 @@
 </script>
 
 <div class={divClass}>
-    <span class={color}>
-        {#if value > 0}
-            <span class="text-base leading-4">↑</span>{value}{unit}
-        {:else if value < 0}
-            <span class="text-base leading-4">↓</span>{Math.abs(value)}{unit}
+    {#if isFinite(value)}
+        <span class={color}>
+            {#if value > 0}
+                <span class="text-base leading-4">↑</span>{value}{unit}
+            {:else if value < 0}
+                <span class="text-base leading-4">↓</span>{Math.abs(
+                    value,
+                )}{unit}
+            {:else}
+                Unchanged
+            {/if}
+        </span>&nbsp;
+        {#if sinceSubtitle}
+            <span class="text-base font-light text-gray-500 dark:text-gray-400"
+                ><br />{since}</span
+            >
+        {:else if equalHeight}
+            <span>{since}</span>
         {:else}
-            Unchanged
+            <span class={spanTextSize[size]}>{since}</span>
         {/if}
-    </span>&nbsp;
-    {#if sinceSubtitle}
-        <span class="text-base font-light text-gray-500 dark:text-gray-400"
-            ><br />{since}</span
-        >
-    {:else if equalHeight}
-        <span>{since}</span>
-    {:else}
-        <span class={spanTextSize[size]}>{since}</span>
     {/if}
 </div>

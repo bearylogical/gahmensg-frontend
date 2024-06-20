@@ -66,3 +66,31 @@ export const processData = (data) => {
 	// match each id with the corresponding data
 	return groupedData;
 };
+
+export const getMostRecentYearData = (data) => {
+	return data.reduce((acc, curr) => {
+		return acc.value_year > curr.value_year ? acc : curr;
+	});
+}
+
+const weight = {
+	ACTUAL: 1,
+	ESTIMATED: 3,
+	REVISED: 2,
+};
+
+// filter the data such that only the lowest value_type is selected for each year
+export const filterData = (data) => {
+	let res = d3.rollups(
+		data,
+		(v) => d3.min(v, (d) => weight[d.value_type]),
+		(d) => d.value_year,
+	);
+	// use the result to filter the data on the weight
+	return data.filter((d) => {
+		return (
+			res.find((r) => r[0] === d.value_year)[1] ===
+			weight[d.value_type]
+		);
+	})
+}
