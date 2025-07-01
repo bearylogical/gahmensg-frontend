@@ -1,9 +1,6 @@
 name: Build SvelteKit App
 
 on: [push]
-env:
-  PUBLIC_API_URL: ${{ vars.PUBLIC_API_URL }}
-  PUBLIC_BEARER_TOKEN: ${{ secrets.PUBLIC_BEARER_TOKEN }}
 
 jobs:
   build:
@@ -16,20 +13,6 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: "20" # Or your preferred Node.js version
-
-      - name: Install pnpm
-        run: npm install -g pnpm
-
-      - name: Install dependencies
-        run: pnpm install
-
-      - name: Build application (SvelteKit)
-        run: pnpm build
 
       - name: Log in to GitHub Container Registry
         uses: docker/login-action@v3

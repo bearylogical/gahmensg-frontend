@@ -7,6 +7,9 @@ WORKDIR /app
 # Copy package.json and pnpm-lock.yaml
 COPY package.json pnpm-lock.yaml ./
 
+# Install pnpm globally in the Docker image
+RUN npm install -g pnpm
+
 # Install dependencies
 RUN pnpm install --prod
 
