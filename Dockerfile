@@ -1,6 +1,13 @@
 # Use a Node.js base image
+
+
 FROM node:20-alpine AS build
 
+ARG PUBLIC_API_URL
+ARG PUBLIC_BEARER_TOKEN
+
+ENV PUBLIC_API_URL=$PUBLIC_API_URL
+ENV PUBLIC_BEARER_TOKEN=$PUBLIC_BEARER_TOKEN
 # Set working directory
 WORKDIR /app
 

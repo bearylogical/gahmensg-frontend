@@ -1,12 +1,15 @@
 name: Build SvelteKit App
 
 on: [push]
-env:
-  PUBLIC_API_URL: ${{ vars.PUBLIC_API_URL }}
-  PUBLIC_BEARER_TOKEN: ${{ secrets.PUBLIC_BEARER_TOKEN }}
+
 jobs:
   build:
     runs-on: ubuntu-latest
+    environment: Build
+
+    env:
+      PUBLIC_API_URL: ${{ vars.PUBLIC_API_URL }}
+      PUBLIC_BEARER_TOKEN: ${{ secrets.PUBLIC_BEARER_TOKEN }}
 
     permissions:
       contents: read
@@ -29,3 +32,6 @@ jobs:
           context: .
           push: true
           tags: ghcr.io/${{ github.repository }}:latest
+          build-args: |
+            PUBLIC_API_URL=${{ env.PUBLIC_API_URL }}
+            PUBLIC_BEARER_TOKEN=${{ env.PUBLIC_BEARER_TOKEN }}
