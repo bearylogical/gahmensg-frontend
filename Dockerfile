@@ -34,8 +34,11 @@ WORKDIR /app
 # Copy built application from the build stage
 COPY --from=build /app/build .
 
+# COPY static files if needed
+COPY static /app/static
+
 # Expose the port SvelteKit listens on (default for adapter-node is 3000)
 EXPOSE 3000
 
 # Start the application
-CMD ["node", "index.js"]
+CMD ["node", "build"]
