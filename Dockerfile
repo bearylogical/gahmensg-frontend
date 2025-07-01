@@ -33,6 +33,9 @@ WORKDIR /app
 
 # Copy built application from the build stage
 COPY --from=build /app/build /app/build
+COPY --from=build /app/package.json /app/package.json
+COPY --from=build /app/pnpm-lock.yaml /app/pnpm-lock.yaml
+COPY --from=build /app/node_modules /app/node_modules
 
 # COPY static files if needed
 COPY static /app/static
