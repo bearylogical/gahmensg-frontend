@@ -32,7 +32,7 @@ FROM node:20-alpine
 WORKDIR /app
 
 # Copy built application from the build stage
-COPY --from=build /app/build .
+COPY --from=build /app/build /app/build
 
 # COPY static files if needed
 COPY static /app/static
