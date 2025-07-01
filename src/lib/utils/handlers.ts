@@ -1,15 +1,14 @@
-import { apiURL, apiURLV2 } from "./constants";
-
+import { fetchData } from "./api";
+import { apiURLV2, apiURL } from "./constants";
 
 export async function fetchBudgetOverview(selectedYear: string, selectedExpenditure: string) {
     const queryURL =
-        apiURL +
-        "/budget?" +
+        `${apiURL}/budget?` +
         new URLSearchParams({
             valueType: selectedExpenditure,
             valueYear: selectedYear,
         });
-    const res = await fetch(queryURL).then((res) => res.json());
+    const res = await fetchData(queryURL);
     return res;
 }
 
@@ -17,14 +16,15 @@ export async function fetchBudgetOverview(selectedYear: string, selectedExpendit
 
 export async function fetchProjects(searchQuery: string) {
     const queryURL =
-        apiURLV2 +
-        "/projects?" +
+        `${apiURLV2}/projects?`+
         new URLSearchParams({
             query: searchQuery,
         });
-    const res = await fetch(queryURL, {
+    const res = await fetchData(queryURL, {
         method: "POST",
-    }).then((res) => res.json());
+    });
+
     return res;
 }
+
 

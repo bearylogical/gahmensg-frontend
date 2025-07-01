@@ -1,7 +1,7 @@
 
 import * as d3 from 'd3';
-
-const apiURL = 'http://localhost:3080';
+import { fetchData } from './api';
+import { apiURL, apiURLV2 } from './constants';
 
 // create a function to load html data from an external url and parse a specific className
 export const loadMinistryDescription = async (url, className = 'agency-description') => {
@@ -19,32 +19,24 @@ export const loadCsv = async (filename) => {
 };
 
 export async function fetchMinistries() {
-	const response = await fetch(apiURL + '/ministry');
-	if (!response.ok) {
-		throw new Error(`HTTP error! status: ${response.status}`);
-	}
-	else {
-		const data = await response.json();
-		const resultKV = {};
-		data.forEach((ministry) => {
-			resultKV[ministry.name] = ministry.id;
-		})
-		return resultKV;
-	}
+	const data = await fetchData(`${apiURLV2}/ministry`);
+	const resultKV = {};
+	data.forEach((ministry) => {
+		resultKV[ministry.name] = ministry.id;
+	})
+	return resultKV;
 }
 
 
 export async function fetchMinistryLinks(id) {
 
-	const response = await fetch(apiURL + `/ministry/${id}/sgdi/links`);
-	const data = await response.json();
+	const data = await fetchData(`/ministry/${id}/sgdi/links`);
 	const processedData = processData(data);
 	return processedData;
 }
 
 export async function fetchMinistryProjects(id) {
-	const response = await fetch(apiURL + `/ministry/${id}/budget/projects`);
-	const data = await response.json();
+	const data = await fetchData(`/ministry/${id}/budget/projects`);
 	return data;
 }
 
@@ -57,7 +49,7 @@ export const loadAndProcessData = async (filename) => {
 
 // create a function to process the data into a d3 grouped object
 export const processData = (data) => {
-	// const filterData = data.filter(d => d.parent !== d.child);
+	// const filterData = d3.filter(data, d => d.parent !== d.child);
 	const groupedData = d3
 		.stratify()
 		.id((d) => d.child_url)
