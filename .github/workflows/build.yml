@@ -10,6 +10,8 @@ jobs:
     env:
       PUBLIC_API_URL: ${{ vars.PUBLIC_API_URL }}
       PUBLIC_BEARER_TOKEN: ${{ secrets.PUBLIC_BEARER_TOKEN }}
+      COOLIFY_WEBHOOK: ${{ secrets.COOLIFY_WEBHOOK }}
+      COOLIFY_TOKEN: ${{ secrets.COOLIFY_TOKEN }}
 
     permissions:
       contents: read
@@ -35,3 +37,6 @@ jobs:
           build-args: |
             PUBLIC_API_URL=${{ env.PUBLIC_API_URL }}
             PUBLIC_BEARER_TOKEN=${{ env.PUBLIC_BEARER_TOKEN }}
+      - name: Deploy to Coolify
+        run: |
+          curl --request GET '${{ secrets.COOLIFY_WEBHOOK }}' --header 'Authorization: Bearer ${{ secrets.COOLIFY_TOKEN }}'
