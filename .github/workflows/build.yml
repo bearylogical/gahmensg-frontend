@@ -1,7 +1,9 @@
 name: Build SvelteKit App
 
 on: [push]
-
+env:
+  PUBLIC_API_URL: ${{ vars.PUBLIC_API_URL }}
+  PUBLIC_BEARER_TOKEN: ${{ secrets.PUBLIC_BEARER_TOKEN }}
 jobs:
   build:
     runs-on: ubuntu-latest
