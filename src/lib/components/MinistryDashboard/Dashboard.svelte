@@ -16,6 +16,9 @@
   import PersonnelDataTable from "./PersonnelDataTable.svelte";
   import ProjectTreemap from "./ProjectTreemap.svelte";
   import ProjectDataTable from "./ProjectDataTable.svelte";
+  import { createEventDispatcher } from "svelte";
+
+  const dispatch = createEventDispatcher();
 
   export let expenditureData;
   export let personnelData;
@@ -23,14 +26,7 @@
   export let programmesData;
   export let title;
   export let subtitle;
-  export let selectedAgency: string;
-  export let selectedID: number;
-  export let fetchHandler: (
-    selectedAgency: string,
-    year: number | null
-  ) => void;
-
-  let selectedChartYear: number | null = null;
+  export let selectedChartYear: number | null = null;
 
   let summaryProjectData: [];
   let summaryPersonnelData: [];
@@ -76,22 +72,15 @@
     });
     return series;
   }
+
   let currentYearData: number;
   let chart_options = chartOptions;
   let transformedPersonnelData;
   let transformedProjectData;
   let transformedProgrammesData;
-  let hierarchyProjectData;
-  $: currentYearData = getMostRecentYearData(expenditureData)?.value_year;
-  $: if (
-    selectedAgency !== null &&
-    selectedID !== null &&
-    selectedChartYear !== null
-  ) {
-    fetchHandler(selectedAgency, selectedChartYear);
-  } else if (selectedAgency !== null && selectedID !== null) {
-    fetchHandler(selectedAgency, null);
-  }
+
+  $: currentYearData =
+    selectedChartYear || getMostRecentYearData(expenditureData)?.value_year;
 
   $: if (selectedChartYear) {
     transformedPersonnelData = personnelData.filter(
@@ -108,15 +97,13 @@
     transformedProjectData = getMostRecentYearDataNoSum(projectData);
     transformedProgrammesData = getMostRecentYearDataNoSum(programmesData);
   }
-  // $: chart_options.xaxis.categories = createXAxis(data);
+
   $: chart_options.series = groupData(expenditureData);
   $: summaryProjectData = getTopNData(transformedProjectData, 5);
   $: summaryPersonnelData = getTopNData(transformedPersonnelData, 5);
-  // $: console.log(transformedProgrammesData);
-  // $: console.log(getTopNData(getMostRecentYearDataNoSum(projectData), 5));
 
   function handleChartYearClick(year: number) {
-    selectedChartYear = year;
+    dispatch("yearClick", year);
   }
 </script>
 
@@ -195,4 +182,3 @@
     </div>
   </div>
 </div>
-

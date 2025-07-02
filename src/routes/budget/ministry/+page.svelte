@@ -24,6 +24,7 @@
   let pivotPersonnelData = [];
   let recentBudgetYear: number;
   let currentSelectedYear: number | null = null;
+  let availableYears: number[] = [];
 
   $: ministries = data.agencies.filter((agency) =>
     agency.name.includes("Ministry")
@@ -97,53 +98,86 @@
 
   async function fetchMinistryData(selectedID) {
     const queryURL =
-      apiURLV2 + "/budget?ministryID=" + selectedID + "&startYear=2018";
+      apiURLV2 + "/budget?ministryID=" + selectedID + "&startYear=1999";
 
     const res = await fetchData(queryURL);
     return res;
   }
 
-  function fetchHandler(selectedAgency) {
-    fetchMinistryData(selectedAgency).then((res) => {
-      ministryData = res;
-      drillDownData = ministryData.ministry_expenditures;
-      personnelData = ministryData.ministry_personnel;
-      projectData = ministryData.project_expenditures;
-      programmesData = ministryData.programme_expenditures;
+  async function fetchHandler(selectedAgency, yearFromDropdown = null) {
+    const res = await fetchMinistryData(selectedAgency);
+    ministryData = res;
 
-      recentBudgetYear =
-        drillDownData.length > 0
-          ? getMostRecentYearData(drillDownData).value_year
-          : 2025;
+    // Populate availableYears from the full fetched data
+    availableYears = [
+      ...new Set(ministryData.ministry_expenditures.map((d) => d.value_year)),
+    ].sort((a, b) => b - a);
 
-      personnelData = filterData(personnelData);
-      personnelData = getProjectDiff(
-        personnelData,
-        "personnel_type",
-        "category"
+    // Set currentSelectedYear based on dropdown selection
+    currentSelectedYear = yearFromDropdown; // This directly reflects the dropdown's value (null for "All Years", or the selected year)
+
+    let processedDrillDownData = ministryData.ministry_expenditures;
+    let processedPersonnelData = ministryData.ministry_personnel;
+    let processedProjectData = ministryData.project_expenditures;
+    let processedProgrammesData = ministryData.programme_expenditures;
+
+    processedPersonnelData = filterData(processedPersonnelData);
+    processedPersonnelData = getProjectDiff(
+      processedPersonnelData,
+      "personnel_type",
+      "category"
+    );
+
+    processedProjectData = filterData(processedProjectData);
+    processedProjectData = getProjectDiff(
+      processedProjectData,
+      "project_title",
+      "parent_header"
+    );
+
+    processedProgrammesData = filterData(processedProgrammesData);
+    processedProgrammesData = processedProgrammesData.filter(
+      (d) => d.value_name === "Total Expenditure"
+    );
+
+    processedProgrammesData = getProjectDiff(
+      processedProgrammesData,
+      "programme_title",
+      "value_name"
+    );
+
+    if (currentSelectedYear !== null) {
+      // Only filter if a specific year is selected
+      drillDownData = processedDrillDownData.filter(
+        (d) => d.value_year <= currentSelectedYear
       );
-
-      projectData = filterData(projectData);
-      projectData = getProjectDiff(
-        projectData,
-        "project_title",
-        "parent_header"
+      personnelData = processedPersonnelData.filter(
+        (d) => d.value_year <= currentSelectedYear
       );
-
-      programmesData = filterData(programmesData);
-      // filter for value_name = "Total Expenditure"
-      programmesData = programmesData.filter(
-        (d) => d.value_name === "Total Expenditure"
+      projectData = processedProjectData.filter(
+        (d) => d.value_year <= currentSelectedYear
       );
-
-      programmesData = getProjectDiff(
-        programmesData,
-        "programme_title",
-        "value_name"
+      programmesData = processedProgrammesData.filter(
+        (d) => d.value_year <= currentSelectedYear
       );
-    });
+    } else {
+      drillDownData = processedDrillDownData;
+      personnelData = processedPersonnelData;
+      projectData = processedProjectData;
+      programmesData = processedProgrammesData;
+    }
+
+    recentBudgetYear =
+      drillDownData.length > 0
+        ? getMostRecentYearData(drillDownData).value_year
+        : 2025;
   }
 
+  function handleYearClick(event) {
+    currentSelectedYear = event.detail;
+    // console.log("Selected Year:", currentSelectedYear);
+    fetchHandler(selectedAgency, currentSelectedYear);
+  }
   // get difference from previous year as a percentage
   function getPercentageDiff(data) {
     let mostRecentYear = getMostRecentYearData(data);
@@ -228,9 +262,13 @@
 
   //group drilldown by value_type and year and sum the value_amount
 
-  $: if (selectedAgency && selectedID) {
-    fetchHandler(selectedAgency);
-  }
+  import { onMount } from "svelte";
+
+  onMount(() => {
+    if (selectedAgency && selectedID) {
+      fetchHandler(selectedAgency, currentSelectedYear);
+    }
+  });
   // $: console.log(pivotPersonnelData);
 </script>
 
@@ -278,6 +316,34 @@
                 </Select.Item>
               {/each}
             </Select.Group>
+          </Select.Content>
+        </Select.Root>
+      </Card.Content>
+    </Card.Root>
+    <Card.Root class="md:col-span-2 sm:col-span-1">
+      <Card.Header>
+        <Card.Title>Filter by Year</Card.Title>
+        <Card.Description
+          >Select a year to show the data. Comparisons will be made on the
+          preceding years, and any data after the selected year is truncated.</Card.Description
+        >
+      </Card.Header>
+      <Card.Content>
+        <Select.Root
+          onSelectedChange={(detail) => {
+            handleYearClick({ detail: detail.value });
+          }}
+        >
+          <Select.Trigger>
+            <Select.Value placeholder={currentSelectedYear || "All Years"} />
+          </Select.Trigger>
+          <Select.Content class="overflow-y-auto max-h-[20rem]" sideOffset={8}>
+            <Select.Item value={null} label="All Years">All Years</Select.Item>
+            {#each availableYears as year}
+              <Select.Item value={year} label={year.toString()}>
+                {year}
+              </Select.Item>
+            {/each}
           </Select.Content>
         </Select.Root>
       </Card.Content>
@@ -373,7 +439,8 @@
           subtitle="Expenditure by year"
           {selectedAgency}
           {selectedID}
-          {fetchHandler}
+          selectedChartYear={currentSelectedYear}
+          on:yearClick={handleYearClick}
         />
       {:else}
         <div class="h-[600px] border rounded flex items-center justify-center">

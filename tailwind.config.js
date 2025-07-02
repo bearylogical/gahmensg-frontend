@@ -5,9 +5,7 @@ const config = {
 	darkMode: ['selector', '[data-mode="dark"]'],
 	content: ["./src/**/*.{html,js,svelte,ts}", './node_modules/flowbite-svelte/**/*.{html,js,svelte,ts}', './node_modules/svelte-ux/**/*.{svelte,js}',
 		'./node_modules/layerchart/**/*.{svelte,js}'],
-	plugins: [
-		require('@tailwindcss/line-clamp'),
-	],
+	plugins: [],
 	theme: {
 		container: {
 			center: true,

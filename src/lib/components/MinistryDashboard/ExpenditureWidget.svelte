@@ -2,7 +2,7 @@
   import { createEventDispatcher } from "svelte";
   import ChangeText from "./ChangeText.svelte";
   import type { ApexOptions } from "apexcharts";
-  import { Card, Chart, Heading } from "flowbite-svelte";
+  import { Card, Heading, Chart } from "flowbite-svelte";
 
   export let title: string = "";
   export let subtitle: string = "";
@@ -12,21 +12,43 @@
 
   const dispatch = createEventDispatcher();
 
-  // Add xAxis.labels.events.click to chartOptions
-  $: if (chartOptions && chartOptions.xaxis) {
-    chartOptions.xaxis.labels = {
-      ...(chartOptions.xaxis.labels || {}),
+  // Add chart events for both x-axis labels and data points
+  $: if (chartOptions) {
+    chartOptions.chart = {
+      ...chartOptions.chart,
       events: {
-        click: (event, chartContext, config) => {
-          const clickedCategory =
-            config.xaxis.categories[config.dataPointIndex];
-          const year = Number(clickedCategory);
+        ...chartOptions.chart?.events,
+        dataPointSelection: (event, chartContext, config) => {
+          const { dataPointIndex, seriesIndex } = config;
+          const series = chartContext.w.config.series[seriesIndex];
+          const dataPoint = series.data[dataPointIndex];
+
+          // Assuming the data point is a year, convert it to a number
+          const year = parseInt(dataPoint, 10);
+          console.log(`Year clicked: ${year}`);
           if (!isNaN(year)) {
             dispatch("yearClick", year);
           }
         },
       },
     };
+
+    // Keep your existing x-axis label click handler
+    if (chartOptions.xaxis) {
+      chartOptions.xaxis.labels = {
+        ...(chartOptions.xaxis.labels || {}),
+        events: {
+          click: (event, chartContext, config) => {
+            const clickedCategory =
+              config.xaxis.categories[config.dataPointIndex];
+            const year = Number(clickedCategory);
+            if (!isNaN(year)) {
+              dispatch("yearClick", year);
+            }
+          },
+        },
+      };
+    }
   }
 </script>
 
