@@ -25,7 +25,7 @@
 
           // Assuming the data point is a year, convert it to a number
           const year = parseInt(dataPoint, 10);
-          console.log(`Year clicked: ${year}`);
+          // console.log(`Year clicked: ${year}`);
           if (!isNaN(year)) {
             dispatch("yearClick", year);
           }

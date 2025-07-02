@@ -11,7 +11,7 @@
   const rows = handler.getRows();
 
   $: data, handler.setRows(data);
-  $: console.log("Data for ProjectDataTable: ", data);
+  // $: console.log("Data for ProjectDataTable: ", data);
 </script>
 
 <div class="pt-2">
