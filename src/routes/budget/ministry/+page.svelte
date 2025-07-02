@@ -48,7 +48,7 @@
     });
   }
   // group by and sum the value_amount
-  function groupDataSum(data) {
+  function groupDataSum(data: []) {
     let res = [];
     let grouped = d3
       .rollups(

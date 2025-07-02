@@ -3,16 +3,17 @@ import { writable } from "svelte/store";
 
 export type ProjectRecord = {
     project_id?: number,
-    project_title?: string,
-    ministry?: string
+    project_title?: string | undefined,
+    ministry?: string | undefined
     value_type?: string,
-    value_amount?: number,
-    value_year?: number,
+    value_amount?: number | undefined,
+    value_year?: number | undefined,
     parent_header?: string,
     document_year?: number,
     ministry_id?: number,
     document_id?: number,
-    expenditure_id?: number
+    expenditure_id?: number,
+    stringIdentifier?: string
 }
 
 export type Project = {

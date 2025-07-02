@@ -1,7 +1,7 @@
 <script lang="ts">
     import ChangeText from "$lib/components/MinistryDashboard/ChangeText.svelte";
     import type { ApexOptions } from "apexcharts";
-    import { Card, Chart, Heading } from "flowbite-svelte";
+    import { Chart } from "flowbite-svelte";
     import { cn } from "$lib/utils/utils";
     export let title: string = "";
     export let subtitle: string = "";

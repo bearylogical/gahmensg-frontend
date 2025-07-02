@@ -8,7 +8,7 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 
-export async function digestMessage(message) {
+export async function digestMessage(message: string) {
     const msgUint8 = new TextEncoder().encode(message); // encode as (utf-8) Uint8Array
     const hashBuffer = await window.crypto.subtle.digest("SHA-256", msgUint8); // hash the message
     const hashArray = Array.from(new Uint8Array(hashBuffer)); // convert buffer to byte array
@@ -33,7 +33,7 @@ const formatter = new Intl.RelativeTimeFormat(undefined, {
 });
 
 export function formatTimeAgo(date: Date) {
-    let duration = (date.getTime() - new Date().getTime()) / 1000;
+    let duration: number = (date.getTime() - new Date().getTime()) / 1000;
 
     for (let i = 0; i <= DIVISIONS.length; i++) {
         const division = DIVISIONS[i];

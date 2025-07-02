@@ -1,18 +1,18 @@
 <script lang="ts">
     import ExpenditureWidget from "./ExpenditureWidget.svelte";
     import { getPercentageDiff } from "$lib/components/MinistryDashboard/utils";
-    import { type Project } from "$lib/stores/projectStore";
+    import { type Project, type ProjectRecord } from "$lib/stores/projectStore";
     import * as d3 from "d3";
 
     export let chart_options;
     export let expenditureData: Project;
     let color = d3.scaleOrdinal(d3.schemeCategory10);
 
-    chart_options.chart.animations = {
+    $: chart_options.chart.animations = {
         enabled: false,
     };
 
-    function ffillData(data: [], years: []) {
+    function ffillData(data: ProjectRecord[], years: number[]) {
         let ffilledData: [] = [];
         for (let i = 0; i < years.length; i++) {
             let year = years[i];
@@ -26,7 +26,7 @@
         return ffilledData;
     }
 
-    function groupData(data: []) {
+    function groupData(data: ProjectRecord[]) {
         let series = [];
         let actual = data.filter((d) => d.value_type === "ACTUAL");
         let revised = data.filter((d) => d.value_type === "REVISED");
@@ -69,7 +69,7 @@
         });
         return series;
     }
-    $: console.log(groupData(expenditureData.values));
+    
 
     $: chart_options.series = groupData(expenditureData.values);
 </script>
