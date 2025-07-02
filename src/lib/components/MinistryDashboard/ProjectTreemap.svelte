@@ -182,9 +182,7 @@
                         <Rect
                           width={nodeWidth}
                           height={nodeHeight}
-                          stroke={colorBy === "children"
-                            ? "hsl(var(--color-primary-content))"
-                            : hsl(nodeColor).darker(1)}
+                          stroke="#000000"
                           stroke-opacity={colorBy === "children" ? 0.2 : 1}
                           fill={nodeColor}
                         />
@@ -192,10 +190,10 @@
                           value="{formatTitle(node)} ({node.children?.length ??
                             0})"
                           class={cls(
-                            "text-md",
+                            "text-lg font-semibold text-wrap",
                             colorBy === "children"
                               ? "fill-primary-content"
-                              : "fill-slate-50 stroke-slate-200"
+                              : "fill-slate-900"
                           )}
                           verticalAnchor="start"
                           x={10}
@@ -204,10 +202,10 @@
                         <Text
                           value={d3.format("$,")(node.value)}
                           class={cls(
-                            "text-sm font-extralight text-wrap",
+                            "text-sm text-wrap",
                             colorBy === "children"
                               ? "fill-primary-content"
-                              : "fill-slate-50 stroke-slate-200"
+                              : "fill-slate-700"
                           )}
                           verticalAnchor="start"
                           x={10}
