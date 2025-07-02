@@ -3,7 +3,7 @@ import { apiURLV2, apiURL } from "./constants";
 
 export async function fetchBudgetOverview(selectedYear: string, selectedExpenditure: string) {
     const queryURL =
-        `${apiURL}/budget?` +
+        `${apiURL}/expenditures?` +
         new URLSearchParams({
             valueType: selectedExpenditure,
             valueYear: selectedYear,

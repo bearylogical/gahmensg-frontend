@@ -6,7 +6,7 @@ export const prerender = false;
 /** @type {import('../$types').PageLoad} */
 export async function load({ }) {
     // const budgetOptsRes = await fetch(apiURL + `/budget/opts`).then((r) => r.json());   
-    const budgetOptsRes = await fetchData(`${apiURL}/budget/opts`);
+    const budgetOptsRes = await fetchData(`${apiURL}/budget/options`);
 
 
     // Consolidate the options by year

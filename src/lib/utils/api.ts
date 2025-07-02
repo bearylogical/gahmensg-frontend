@@ -8,7 +8,6 @@ export async function fetchData(endpoint: string, options?: RequestInit) {
         headers.set('Authorization', `Bearer ${PUBLIC_BEARER_TOKEN}`);
     }
     headers.set('Content-Type', 'application/json');
-
     const response = await fetch(`${sanitizedUrl}${endpoint}`, {
         ...options,
         headers,
