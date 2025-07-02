@@ -224,7 +224,7 @@
             {/if}
           </div>
         </div>
-        <Separator />
+        <Separator class="bg-gray-700" />
         <ScrollArea class="p-4 h-screen" orientation="vertical">
           <div class="flex flex-col gap-2 pt-0">
             {#if singleProject}

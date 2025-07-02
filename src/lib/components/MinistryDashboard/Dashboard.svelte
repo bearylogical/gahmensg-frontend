@@ -23,6 +23,14 @@
   export let programmesData;
   export let title;
   export let subtitle;
+  export let selectedAgency: string;
+  export let selectedID: number;
+  export let fetchHandler: (
+    selectedAgency: string,
+    year: number | null
+  ) => void;
+
+  let selectedChartYear: number | null = null;
 
   let summaryProjectData: [];
   let summaryPersonnelData: [];
@@ -68,21 +76,48 @@
     });
     return series;
   }
-
+  let currentYearData: number;
   let chart_options = chartOptions;
   let transformedPersonnelData;
   let transformedProjectData;
   let transformedProgrammesData;
   let hierarchyProjectData;
-  $: transformedPersonnelData = getMostRecentYearDataNoSum(personnelData);
-  $: transformedProjectData = getMostRecentYearDataNoSum(projectData);
-  $: transformedProgrammesData = getMostRecentYearDataNoSum(programmesData);
+  $: currentYearData = getMostRecentYearData(expenditureData)?.value_year;
+  $: if (
+    selectedAgency !== null &&
+    selectedID !== null &&
+    selectedChartYear !== null
+  ) {
+    fetchHandler(selectedAgency, selectedChartYear);
+  } else if (selectedAgency !== null && selectedID !== null) {
+    fetchHandler(selectedAgency, null);
+  }
+
+  $: if (selectedChartYear) {
+    transformedPersonnelData = personnelData.filter(
+      (d) => d.value_year === selectedChartYear
+    );
+    transformedProjectData = projectData.filter(
+      (d) => d.value_year === selectedChartYear
+    );
+    transformedProgrammesData = programmesData.filter(
+      (d) => d.value_year === selectedChartYear
+    );
+  } else {
+    transformedPersonnelData = getMostRecentYearDataNoSum(personnelData);
+    transformedProjectData = getMostRecentYearDataNoSum(projectData);
+    transformedProgrammesData = getMostRecentYearDataNoSum(programmesData);
+  }
   // $: chart_options.xaxis.categories = createXAxis(data);
   $: chart_options.series = groupData(expenditureData);
   $: summaryProjectData = getTopNData(transformedProjectData, 5);
   $: summaryPersonnelData = getTopNData(transformedPersonnelData, 5);
   // $: console.log(transformedProgrammesData);
   // $: console.log(getTopNData(getMostRecentYearDataNoSum(projectData), 5));
+
+  function handleChartYearClick(year: number) {
+    selectedChartYear = year;
+  }
 </script>
 
 <div class="grid md:grid-cols-2 sm:grid-cols-1 gap-4">
@@ -92,8 +127,8 @@
       {title}
       {subtitle}
       changeValue={getPercentageDiff(expenditureData).toFixed(2)}
-      changeSince={"from " +
-        (getMostRecentYearData(expenditureData).value_year - 1)}
+      changeSince={"from " + (currentYearData - 1)}
+      on:yearClick={(event) => handleChartYearClick(event.detail)}
     />
   </div>
   <div class="lg:col-span-1 col-span-2">
@@ -103,7 +138,9 @@
     ></Summary>
   </div>
   <div class="col-span-2 border shadow-md rounded-lg">
-    <h2 class="text-2xl font-bold pl-6 pt-6">Programme Expenditure</h2>
+    <h2 class="text-2xl font-bold pl-6 pt-6">
+      Programme Expenditure ({selectedChartYear || currentYearData})
+    </h2>
     <p class="text-base font-light pl-6 text-gray-500 dark:text-gray-400">
       Overview of <span class="italic underline">estimated</span> programme expenditure,
       sorted by amount.
@@ -120,7 +157,9 @@
     </div>
   </div>
   <div class="col-span-2 border shadow-md rounded-lg">
-    <h2 class="text-2xl font-bold pl-6 pt-6">Project Expenditure</h2>
+    <h2 class="text-2xl font-bold pl-6 pt-6">
+      Project Expenditure ({selectedChartYear || currentYearData})
+    </h2>
     <p class="text-base font-light pl-6 text-gray-500 dark:text-gray-400">
       Overview of <span class="italic underline">estimated</span> project expenditure,
       sorted by amount.
@@ -137,7 +176,9 @@
     </div>
   </div>
   <div class="col-span-2 border shadow-md rounded-lg">
-    <h2 class="text-2xl font-bold pl-6 pt-6">Personnel Counts</h2>
+    <h2 class="text-2xl font-bold pl-6 pt-6">
+      Personnel Counts ({selectedChartYear || currentYearData})
+    </h2>
     <p class="text-base font-light pl-6 text-gray-500 dark:text-gray-400">
       Overview of <span class="italic underline">estimated</span> headcount by category,
       arranged by number of personnel.
@@ -154,3 +195,4 @@
     </div>
   </div>
 </div>
+

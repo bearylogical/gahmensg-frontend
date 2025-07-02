@@ -38,7 +38,7 @@
               {#if row.project_id}
                 <a
                   href="/budget/project?id={row.project_id}"
-                  class="text-blue-600 hover:underline flex items-center gap-1"
+                  class="flex items-center gap-1"
                 >
                   {row.project_title}
                   <Tooltip.Root>

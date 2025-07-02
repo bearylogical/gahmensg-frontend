@@ -11,7 +11,7 @@
 
   export let data;
   let focusElement: HTMLElement;
-  let selectedAgency = "";
+  let selectedAgency: number | null = null;
   let selectedID: number;
   let drillDownData: [] = [];
   let ministryData;
@@ -23,9 +23,20 @@
   let pivotExpenditureData = [];
   let pivotPersonnelData = [];
   let recentBudgetYear: number;
+  let currentSelectedYear: number | null = null;
 
-  // default the agency to the first
-  $: if (data.agencies.length > 0) {
+  $: ministries = data.agencies.filter((agency) =>
+    agency.name.includes("Ministry")
+  );
+  $: organsOfState = data.agencies.filter(
+    (agency) => !agency.name.includes("Ministry")
+  );
+
+  // default the agency to the first ministry in the list
+  $: if (ministries.length > 0) {
+    selectedAgency = ministries[0].id;
+    selectedID = ministries[0].name;
+  } else {
     selectedAgency = data.agencies[0].id;
     selectedID = data.agencies[0].name;
   }
@@ -86,7 +97,7 @@
 
   async function fetchMinistryData(selectedID) {
     const queryURL =
-      apiURLV2 + "/budget?ministryID=" + selectedID + "&startYear=2019";
+      apiURLV2 + "/budget?ministryID=" + selectedID + "&startYear=2018";
 
     const res = await fetchData(queryURL);
     return res;
@@ -103,7 +114,7 @@
       recentBudgetYear =
         drillDownData.length > 0
           ? getMostRecentYearData(drillDownData).value_year
-          : 2024;
+          : 2025;
 
       personnelData = filterData(personnelData);
       personnelData = getProjectDiff(
@@ -230,10 +241,9 @@
   <div class="grid gap-y-4 sm:grid-cols-1 md:grid-cols-4 sm:gap-4">
     <Card.Root class="md:col-span-2 sm:col-span-1">
       <Card.Header>
-        <Card.Title>Explore expenditure by Ministry</Card.Title>
+        <Card.Title>Explore expenditure by Key Government Agencies</Card.Title>
         <Card.Description
-          >Drilldown Ministerial/Government Agency expenditure by filtering on
-          Agency</Card.Description
+          >Get expenditure by filtering on Agency</Card.Description
         >
       </Card.Header>
       <Card.Content>
@@ -251,11 +261,23 @@
             <Select.Value placeholder={selectedID} />
           </Select.Trigger>
           <Select.Content class="overflow-y-auto max-h-[20rem]" sideOffset={8}>
-            {#each data.agencies as agency}
-              <Select.Item value={agency.id} label={agency.name}>
-                {agency.name}
-              </Select.Item>
-            {/each}
+            <Select.Group>
+              <Select.Label>Ministries</Select.Label>
+              {#each ministries as agency}
+                <Select.Item value={agency.id} label={agency.name}>
+                  {agency.name}
+                </Select.Item>
+              {/each}
+            </Select.Group>
+            <Select.Separator />
+            <Select.Group>
+              <Select.Label>Organs of State</Select.Label>
+              {#each organsOfState as agency}
+                <Select.Item value={agency.id} label={agency.name}>
+                  {agency.name}
+                </Select.Item>
+              {/each}
+            </Select.Group>
           </Select.Content>
         </Select.Root>
       </Card.Content>
@@ -349,6 +371,9 @@
           {programmesData}
           title={selectedID}
           subtitle="Expenditure by year"
+          {selectedAgency}
+          {selectedID}
+          {fetchHandler}
         />
       {:else}
         <div class="h-[600px] border rounded flex items-center justify-center">
