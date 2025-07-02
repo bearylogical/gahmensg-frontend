@@ -258,6 +258,7 @@
   function selectMinistryHandler(agency) {
     selectedAgency = agency.value;
     selectedID = agency.label;
+    fetchHandler(selectedAgency, currentSelectedYear);
   }
 
   //group drilldown by value_type and year and sum the value_amount
