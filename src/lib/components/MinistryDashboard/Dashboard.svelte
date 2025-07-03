@@ -8,7 +8,7 @@
     getPercentageDiff,
     getMostRecentYearData,
     getTopNData,
-    getMostRecentYearDataNoSum,
+    getMostRecentYearDataNoSum as getYearDataNoSum,
   } from "./utils";
   import * as d3 from "d3";
   import ProgrammeTreemap from "./ProgrammeTreemap.svelte";
@@ -93,9 +93,12 @@
       (d) => d.value_year === selectedChartYear
     );
   } else {
-    transformedPersonnelData = getMostRecentYearDataNoSum(personnelData);
-    transformedProjectData = getMostRecentYearDataNoSum(projectData);
-    transformedProgrammesData = getMostRecentYearDataNoSum(programmesData);
+    transformedPersonnelData = getYearDataNoSum(personnelData, currentYearData);
+    transformedProjectData = getYearDataNoSum(projectData, currentYearData);
+    transformedProgrammesData = getYearDataNoSum(
+      programmesData,
+      currentYearData
+    );
   }
 
   $: chart_options.series = groupData(expenditureData);
