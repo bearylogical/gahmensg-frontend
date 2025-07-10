@@ -10,7 +10,6 @@
     Text,
     RectClipPath,
     Tooltip,
-    TooltipItem,
     findAncestor,
   } from "layerchart";
   import { cls, Button, table, round } from "svelte-ux";
@@ -29,6 +28,7 @@
       (d, i, self) =>
         i === self.findIndex((t) => t.object_path === d.object_path)
     );
+
     // reject data with object_code == 9999
     data = data.filter((d) => d.object_code !== "9999");
     const stratifyData = d3.stratify().path((d) => d.object_path)(data);
@@ -54,8 +54,8 @@
   }
   $: hierarchy = parseData(data);
 
-  function formatTitle(d) {
-    return d.data.id.split("/").pop();
+  function formatTitle(val: string) {
+    return val.split("/").pop();
   }
 
   let tile = "binary";
@@ -112,7 +112,9 @@
   >
     <div class="text-left">
       <div class="text-2xl">
-        {item.data.id == "/" ? "Government Expenditure" : formatTitle(item)}
+        {item.data.id == "/"
+          ? "Government Expenditure"
+          : formatTitle(item.data.id)}
       </div>
       <div class="text-sm font-light pb-2">
         {d3.format("$,")(item.value)}
@@ -121,7 +123,7 @@
   </Button>
 </Breadcrumb>
 <div class="h-[600px] p-4 border rounded">
-  <Chart data={hierarchy.copy()} tooltip={{ mode: "manual" }} let:tooltip>
+  <Chart data={hierarchy.copy()} let:tooltip>
     <Svg>
       <Bounds
         domain={selectedZoomable}
@@ -136,10 +138,12 @@
               <Group
                 x={xScale(node.x0)}
                 y={yScale(node.y0)}
-                on:click={() =>
+                onclick={() =>
                   node.children ? (selectedZoomable = node) : null}
-                on:mousemove={(e) => tooltip.show(e, node)}
-                on:mouseleave={tooltip.hide}
+                onpointermove={(e) => {
+                  tooltip.show(e, node);
+                }}
+                onpointerleave={() => tooltip.hide()}
               >
                 {@const nodeWidth = xScale(node.x1) - xScale(node.x0)}
                 {@const nodeHeight = yScale(node.y1) - yScale(node.y0)}
@@ -155,8 +159,8 @@
                         fill={nodeColor}
                       />
                       <Text
-                        value="{formatTitle(node)} ({node.children?.length ??
-                          0})"
+                        value="{formatTitle(node.data.id)} ({node.children
+                          ?.length ?? 0})"
                         class={cls(
                           "text-lg font-semibold text-wrap",
                           colorBy === "children"
@@ -188,29 +192,32 @@
         </ChartClipPath>
       </Bounds>
     </Svg>
-    <Tooltip
-      header={(data) => formatTitle(data)}
-      anchor="left"
+    <Tooltip.Root
       classes={{
-        container: "bg-slate-50 dark:bg-slate-800",
-        header: "text-slate-40 dark:text-white text-left",
-        content: "text-slate-40 dark:text-white text-left",
+        root: "bg-white dark:bg-gray-800 text-black dark:text-white shadow-lg rounded p-2",
       }}
       let:data
     >
-      <TooltipItem
-        label="Expenditure"
-        value={data.value}
-        format="currency"
-        valueAlign="left"
-      />
-      <TooltipItem
-        label="% of Total"
-        value={data.data.percentage}
-        format="percent"
-        valueAlign="left"
-      />
-    </Tooltip>
+      {#if data}
+        <Tooltip.Header classes={{ root: "text-lg font-semibold" }}>
+          {formatTitle(data.data.id)}
+        </Tooltip.Header>
+        <Tooltip.List>
+          <Tooltip.Item
+            label="Expenditure"
+            value={data.value}
+            format="currency"
+            valueAlign="left"
+          />
+          <Tooltip.Item
+            label="% of Total"
+            value={data.data.percentage}
+            format="percent"
+            valueAlign="left"
+          />
+        </Tooltip.List>
+      {/if}
+    </Tooltip.Root>
   </Chart>
 </div>
 <div class=" mx-auto py-10">

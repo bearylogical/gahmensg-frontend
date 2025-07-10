@@ -10,7 +10,6 @@
     Text,
     RectClipPath,
     Tooltip,
-    TooltipItem,
     findAncestor,
   } from "layerchart";
   import { cls, Button, table, round } from "svelte-ux";
@@ -164,10 +163,10 @@
                 <Group
                   x={xScale(node.x0)}
                   y={yScale(node.y0)}
-                  on:click={() =>
+                  onclick={() =>
                     node.children ? (selectedZoomable = node) : null}
-                  on:mousemove={(e) => tooltip.show(e, node)}
-                  on:mouseleave={tooltip.hide}
+                  onpointermove={(e) => tooltip.show(e, node)}
+                  onpointerleave={tooltip.hide}
                 >
                   {@const nodeWidth = xScale(node.x1) - xScale(node.x0)}
                   {@const nodeHeight = yScale(node.y1) - yScale(node.y0)}
@@ -220,7 +219,7 @@
           </ChartClipPath>
         </Bounds>
       </Svg>
-      <Tooltip
+      <Tooltip.Root
         header={(data) => formatTitle(data)}
         anchor="left"
         classes={{
@@ -230,18 +229,23 @@
         }}
         let:data
       >
-        <TooltipItem
-          label="Count of Personnel"
-          value={data.value}
-          valueAlign="left"
-        />
-        <TooltipItem
-          label="% of Total"
-          value={data.data.percentage}
-          format="percent"
-          valueAlign="left"
-        />
-      </Tooltip>
+        <Tooltip.Header classes={{ root: "text-lg font-semibold" }}>
+          {formatTitle(data)}
+        </Tooltip.Header>
+        <Tooltip.List>
+          <Tooltip.Item
+            label="Count of Personnel"
+            value={data.value}
+            valueAlign="left"
+          />
+          <Tooltip.Item
+            label="% of Total"
+            value={data.data.percentage}
+            format="percent"
+            valueAlign="left"
+          />
+        </Tooltip.List>
+      </Tooltip.Root>
     </Chart>
   </div>
 {/key}
