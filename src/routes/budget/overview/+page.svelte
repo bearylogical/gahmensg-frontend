@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Spinner, WidgetPlaceholder } from "flowbite-svelte";
+  import { Spinner } from "flowbite-svelte";
   import { onMount } from "svelte";
   import { fetchBudgetOverview } from "$lib/utils/handlers";
   import Treemap from "$lib/components/Treemap.svelte";
@@ -7,8 +7,6 @@
   import * as Accordion from "$lib/components/ui/accordion/index.js";
   import { mdiInformationSlabCircleOutline } from "@mdi/js";
   import { Icon } from "svelte-ux";
-
-  let focusElement: HTMLElement;
 
   let budgetOverview: [] = [];
   onMount(async () => {
