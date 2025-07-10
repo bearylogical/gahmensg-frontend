@@ -8,6 +8,9 @@ dependencies:
   '@layerstack/tailwind':
     specifier: ^1.0.1
     version: 1.0.1
+  '@mdi/js':
+    specifier: ^7.4.47
+    version: 7.4.47
   '@observablehq/plot':
     specifier: ^0.6.17
     version: 0.6.17
