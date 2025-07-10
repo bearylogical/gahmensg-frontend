@@ -1,0 +1,862 @@
+[
+  {
+    "parent": "Revenue",
+    "child": "Net Investment Returns Contribution (NIRC)",
+    "value": 27100000000
+  },
+  {
+    "parent": "Revenue",
+    "child": "Operating Revenue",
+    "value": 122778262000
+  },
+  {
+    "parent": "Total Expenditure",
+    "child": "Surplus",
+    "value": 2740000000
+  },
+  {
+    "parent": "Operating Revenue",
+    "child": "TAX REVENUE (B00)",
+    "value": 110329099000
+  },
+  {
+    "parent": "Operating Revenue",
+    "child": "FEES AND CHARGES (C00)",
+    "value": 11680444000
+  },
+  {
+    "parent": "Operating Revenue",
+    "child": "OTHERS (J00)",
+    "value": 768719000
+  },
+  {
+    "parent": "Investment and interest Income",
+    "child": "INVESTMENT AND INTEREST INCOME (L00)",
+    "value": 17400551000
+  },
+  {
+    "parent": "Capital Receipts",
+    "child": "CAPITAL RECEIPTS (M00)",
+    "value": 19440967000
+  },
+  {
+    "parent": "TAX REVENUE (B00)",
+    "child": "INCOME TAX (B10)",
+    "value": 55708640000
+  },
+  {
+    "parent": "INCOME TAX (B10)",
+    "child": "Corporate, Personal and Withholding Tax (B11)",
+    "value": 55300919000
+  },
+  {
+    "parent": "Corporate, Personal and Withholding Tax (B11)",
+    "child": "Corporate Income Tax (B111)",
+    "value": 32669336000
+  },
+  {
+    "parent": "Corporate, Personal and Withholding Tax (B11)",
+    "child": "Personal Income Tax (B112)",
+    "value": 20231123000
+  },
+  {
+    "parent": "Corporate, Personal and Withholding Tax (B11)",
+    "child": "Withholding Tax (B113)",
+    "value": 2400460000
+  },
+  {
+    "parent": "INCOME TAX (B10)",
+    "child": "Statutory Boards' Contributions (B12)",
+    "value": 407721000
+  },
+  {
+    "parent": "TAX REVENUE (B00)",
+    "child": "ASSETS TAXES (B20)",
+    "value": 6894325000
+  },
+  {
+    "parent": "ASSETS TAXES (B20)",
+    "child": "Property Tax (B21)",
+    "value": 6894325000
+  },
+  {
+    "parent": "Property Tax (B21)",
+    "child": "Private Properties (B211)",
+    "value": 6459107000
+  },
+  {
+    "parent": "Property Tax (B21)",
+    "child": "Statutory Boards (B212)",
+    "value": 435218000
+  },
+  {
+    "parent": "TAX REVENUE (B00)",
+    "child": "CUSTOMS, EXCISE AND CARBON TAXES (B30)",
+    "value": 4044916000
+  },
+  {
+    "parent": "CUSTOMS, EXCISE AND CARBON TAXES (B30)",
+    "child": "Excise Duties (B31)",
+    "value": 3402844000
+  },
+  {
+    "parent": "Excise Duties (B31)",
+    "child": "Petroleum Products (B311)",
+    "value": 1039208000
+  },
+  {
+    "parent": "Excise Duties (B31)",
+    "child": "Tobacco (B312)",
+    "value": 1199594000
+  },
+  {
+    "parent": "Excise Duties (B31)",
+    "child": "Liquors (B313)",
+    "value": 754443000
+  },
+  {
+    "parent": "Excise Duties (B31)",
+    "child": "Motor Vehicles (B314)",
+    "value": 407963000
+  },
+  {
+    "parent": "Excise Duties (B31)",
+    "child": "CNG Unit Duty (B315)",
+    "value": 3000
+  },
+  {
+    "parent": "Excise Duties (B31)",
+    "child": "Other Excise Duties (B318)",
+    "value": 1633000
+  },
+  {
+    "parent": "CUSTOMS, EXCISE AND CARBON TAXES (B30)",
+    "child": "Customs Duties (B32)",
+    "value": 4000
+  },
+  {
+    "parent": "Customs Duties (B32)",
+    "child": "Other Customs Duties (B329)",
+    "value": 4000
+  },
+  {
+    "parent": "CUSTOMS, EXCISE AND CARBON TAXES (B30)",
+    "child": "Carbon Tax (B33)",
+    "value": 642068000
+  },
+  {
+    "parent": "Carbon Tax (B33)",
+    "child": "Carbon Tax (B331)",
+    "value": 642068000
+  },
+  {
+    "parent": "TAX REVENUE (B00)",
+    "child": "MOTOR VEHICLE TAXES (B40)",
+    "value": 2567196000
+  },
+  {
+    "parent": "MOTOR VEHICLE TAXES (B40)",
+    "child": "Additional Registration Fees (B401)",
+    "value": 1657708000
+  },
+  {
+    "parent": "MOTOR VEHICLE TAXES (B40)",
+    "child": "Road Tax (B402)",
+    "value": 878545000
+  },
+  {
+    "parent": "MOTOR VEHICLE TAXES (B40)",
+    "child": "Special Tax on Heavy Oil Engines (B403)",
+    "value": 19479000
+  },
+  {
+    "parent": "MOTOR VEHICLE TAXES (B40)",
+    "child": "Non-Motor Vehicle Licences (B404)",
+    "value": 4633000
+  },
+  {
+    "parent": "MOTOR VEHICLE TAXES (B40)",
+    "child": "Conversion Premium (B406)",
+    "value": 6831000
+  },
+  {
+    "parent": "TAX REVENUE (B00)",
+    "child": "GOODS AND SERVICES TAX (B50)",
+    "value": 21732555000
+  },
+  {
+    "parent": "TAX REVENUE (B00)",
+    "child": "BETTING TAXES (B60)",
+    "value": 3291120000
+  },
+  {
+    "parent": "TAX REVENUE (B00)",
+    "child": "STAMP DUTY (B70)",
+    "value": 5921000000
+  },
+  {
+    "parent": "STAMP DUTY (B70)",
+    "child": "Stamp Duty (B701)",
+    "value": 5921000000
+  },
+  {
+    "parent": "TAX REVENUE (B00)",
+    "child": "SELECTIVE CONSUMPTION TAXES (B80)",
+    "value": 402432000
+  },
+  {
+    "parent": "SELECTIVE CONSUMPTION TAXES (B80)",
+    "child": "Water Conservation Tax (B802)",
+    "value": 402432000
+  },
+  {
+    "parent": "TAX REVENUE (B00)",
+    "child": "OTHER TAXES (B90)",
+    "value": 9766915000
+  },
+  {
+    "parent": "FEES AND CHARGES (C00)",
+    "child": "LICENCES AND PERMITS (C10)",
+    "value": 7155018000
+  },
+  {
+    "parent": "LICENCES AND PERMITS (C10)",
+    "child": "Environment (C11)",
+    "value": 1716000
+  },
+  {
+    "parent": "LICENCES AND PERMITS (C10)",
+    "child": "Home Affairs (C12)",
+    "value": 231491000
+  },
+  {
+    "parent": "LICENCES AND PERMITS (C10)",
+    "child": "Housing and Properties (C13)",
+    "value": 1315000
+  },
+  {
+    "parent": "LICENCES AND PERMITS (C10)",
+    "child": "Medical and Health (C14)",
+    "value": 2365000
+  },
+  {
+    "parent": "LICENCES AND PERMITS (C10)",
+    "child": "Commerce (C15)",
+    "value": 14885000
+  },
+  {
+    "parent": "LICENCES AND PERMITS (C10)",
+    "child": "Transport and Communication (C16)",
+    "value": 6755045000
+  },
+  {
+    "parent": "LICENCES AND PERMITS (C10)",
+    "child": "Customs and Excise (C17)",
+    "value": 25969000
+  },
+  {
+    "parent": "LICENCES AND PERMITS (C10)",
+    "child": "Other Licences and Permits (C19)",
+    "value": 122232000
+  },
+  {
+    "parent": "FEES AND CHARGES (C00)",
+    "child": "SERVICE FEES (C20)",
+    "value": 900607000
+  },
+  {
+    "parent": "SERVICE FEES (C20)",
+    "child": "Admission Charges (C21)",
+    "value": 4507000
+  },
+  {
+    "parent": "SERVICE FEES (C20)",
+    "child": "Environmental Fees (C22)",
+    "value": 265927000
+  },
+  {
+    "parent": "SERVICE FEES (C20)",
+    "child": "Fire and Police Services Fees (C23)",
+    "value": 29500000
+  },
+  {
+    "parent": "SERVICE FEES (C20)",
+    "child": "Inspection and Certification Fees (C25)",
+    "value": 7127000
+  },
+  {
+    "parent": "SERVICE FEES (C20)",
+    "child": "Professional Services Fees (C27)",
+    "value": 29355000
+  },
+  {
+    "parent": "SERVICE FEES (C20)",
+    "child": "Schools and Institutions Fees (C28)",
+    "value": 308308000
+  },
+  {
+    "parent": "SERVICE FEES (C20)",
+    "child": "Other Service Fees (C29)",
+    "value": 255883000
+  },
+  {
+    "parent": "FEES AND CHARGES (C00)",
+    "child": "SALES OF GOODS (C30)",
+    "value": 369056000
+  },
+  {
+    "parent": "SALES OF GOODS (C30)",
+    "child": "Publications (C32)",
+    "value": 4282000
+  },
+  {
+    "parent": "SALES OF GOODS (C30)",
+    "child": "Commercial Goods (C33)",
+    "value": 217359000
+  },
+  {
+    "parent": "SALES OF GOODS (C30)",
+    "child": "Search and Supply of Information (C34)",
+    "value": 203000
+  },
+  {
+    "parent": "SALES OF GOODS (C30)",
+    "child": "Stores and Other Goods (C39)",
+    "value": 147212000
+  },
+  {
+    "parent": "FEES AND CHARGES (C00)",
+    "child": "RENTAL (C40)",
+    "value": 1806186000
+  },
+  {
+    "parent": "RENTAL (C40)",
+    "child": "Residential Properties (C41)",
+    "value": 987561000
+  },
+  {
+    "parent": "RENTAL (C40)",
+    "child": "Local and Overseas Quarters (C42)",
+    "value": 1495000
+  },
+  {
+    "parent": "RENTAL (C40)",
+    "child": "Premises for Businesses (C43)",
+    "value": 290661000
+  },
+  {
+    "parent": "RENTAL (C40)",
+    "child": "School Premises (C44)",
+    "value": 7436000
+  },
+  {
+    "parent": "RENTAL (C40)",
+    "child": "Other Premises (C49)",
+    "value": 519033000
+  },
+  {
+    "parent": "FEES AND CHARGES (C00)",
+    "child": "FINES AND FORFEITURES (C50)",
+    "value": 1182265000
+  },
+  {
+    "parent": "FINES AND FORFEITURES (C50)",
+    "child": "Court Fines and Forfeitures (C51)",
+    "value": 833404000
+  },
+  {
+    "parent": "FINES AND FORFEITURES (C50)",
+    "child": "Traffic Fines (C52)",
+    "value": 54345000
+  },
+  {
+    "parent": "FINES AND FORFEITURES (C50)",
+    "child": "Composition Fines and Penalties (C53)",
+    "value": 35100000
+  },
+  {
+    "parent": "FINES AND FORFEITURES (C50)",
+    "child": "Other Fines and Penalties (C59)",
+    "value": 259416000
+  },
+  {
+    "parent": "FEES AND CHARGES (C00)",
+    "child": "REIMBURSEMENTS (C60)",
+    "value": 149233000
+  },
+  {
+    "parent": "REIMBURSEMENTS (C60)",
+    "child": "Recovery of Costs\/Expenses (C61)",
+    "value": 35600000
+  },
+  {
+    "parent": "REIMBURSEMENTS (C60)",
+    "child": "Reimbursement for Services (C62)",
+    "value": 3823000
+  },
+  {
+    "parent": "REIMBURSEMENTS (C60)",
+    "child": "Secondment\/Loan of Staff (C63)",
+    "value": 86287000
+  },
+  {
+    "parent": "REIMBURSEMENTS (C60)",
+    "child": "Other Reimbursements (C69)",
+    "value": 23523000
+  },
+  {
+    "parent": "FEES AND CHARGES (C00)",
+    "child": "OTHER FEES AND CHARGES (C90)",
+    "value": 118079000
+  },
+  {
+    "parent": "INVESTMENT AND INTEREST INCOME (L00)",
+    "child": "INTEREST (L10)",
+    "value": 12242125000
+  },
+  {
+    "parent": "INTEREST (L10)",
+    "child": "Interest on Investments (L11)",
+    "value": 12144409000
+  },
+  {
+    "parent": "INTEREST (L10)",
+    "child": "Interest on Bank Accounts (L13)",
+    "value": 97716000
+  },
+  {
+    "parent": "INVESTMENT AND INTEREST INCOME (L00)",
+    "child": "DIVIDENDS (L20)",
+    "value": 4003054000
+  },
+  {
+    "parent": "INVESTMENT AND INTEREST INCOME (L00)",
+    "child": "INTEREST ON LOANS (L40)",
+    "value": 1155372000
+  },
+  {
+    "parent": "CAPITAL RECEIPTS (M00)",
+    "child": "SALES OF LAND (M10)",
+    "value": 19439265000
+  },
+  {
+    "parent": "CAPITAL RECEIPTS (M00)",
+    "child": "SALES OF CAPITAL GOODS (M20)",
+    "value": 1702000
+  },
+  {
+    "parent": "Total Expenditure",
+    "child": "Expenditure_Government Administration",
+    "value": 4718000000
+  },
+  {
+    "parent": "Expenditure_Government Administration",
+    "child": "Expenditure_Government Administration_Digital Development and Information",
+    "value": 684000000
+  },
+  {
+    "parent": "Expenditure_Government Administration_Digital Development and Information",
+    "child": "Expenditure_Government Administration_Digital Development and Information_Development",
+    "value": 3000000
+  },
+  {
+    "parent": "Expenditure_Government Administration_Digital Development and Information",
+    "child": "Expenditure_Government Administration_Digital Development and Information_Operating",
+    "value": 681000000
+  },
+  {
+    "parent": "Expenditure_Government Administration",
+    "child": "Expenditure_Government Administration_Finance",
+    "value": 1550000000
+  },
+  {
+    "parent": "Expenditure_Government Administration_Finance",
+    "child": "Expenditure_Government Administration_Finance_Development",
+    "value": 128000000
+  },
+  {
+    "parent": "Expenditure_Government Administration_Finance",
+    "child": "Expenditure_Government Administration_Finance_Operating",
+    "value": 1422000000
+  },
+  {
+    "parent": "Expenditure_Government Administration",
+    "child": "Expenditure_Government Administration_Law",
+    "value": 454000000
+  },
+  {
+    "parent": "Expenditure_Government Administration_Law",
+    "child": "Expenditure_Government Administration_Law_Development",
+    "value": 139000000
+  },
+  {
+    "parent": "Expenditure_Government Administration_Law",
+    "child": "Expenditure_Government Administration_Law_Operating",
+    "value": 315000000
+  },
+  {
+    "parent": "Expenditure_Government Administration",
+    "child": "Expenditure_Government Administration_Organs of State",
+    "value": 814000000
+  },
+  {
+    "parent": "Expenditure_Government Administration_Organs of State",
+    "child": "Expenditure_Government Administration_Organs of State_Development",
+    "value": 35000000
+  },
+  {
+    "parent": "Expenditure_Government Administration_Organs of State",
+    "child": "Expenditure_Government Administration_Organs of State_Operating",
+    "value": 779000000
+  },
+  {
+    "parent": "Expenditure_Government Administration",
+    "child": "Expenditure_Government Administration_Prime Minister's Office",
+    "value": 1216000000
+  },
+  {
+    "parent": "Expenditure_Government Administration_Prime Minister's Office",
+    "child": "Expenditure_Government Administration_Prime Minister's Office_Development",
+    "value": 107000000
+  },
+  {
+    "parent": "Expenditure_Government Administration_Prime Minister's Office",
+    "child": "Expenditure_Government Administration_Prime Minister's Office_Operating",
+    "value": 1109000000
+  },
+  {
+    "parent": "Total Expenditure",
+    "child": "Expenditure_Social Development",
+    "value": 61317000000
+  },
+  {
+    "parent": "Expenditure_Social Development",
+    "child": "Expenditure_Social Development_Digital Development and Information",
+    "value": 1104000000
+  },
+  {
+    "parent": "Expenditure_Social Development_Digital Development and Information",
+    "child": "Expenditure_Social Development_Digital Development and Information_Development",
+    "value": 41000000
+  },
+  {
+    "parent": "Expenditure_Social Development_Digital Development and Information",
+    "child": "Expenditure_Social Development_Digital Development and Information_Operating",
+    "value": 1063000000
+  },
+  {
+    "parent": "Expenditure_Social Development",
+    "child": "Expenditure_Social Development_Culture, Community and Youth",
+    "value": 2782000000
+  },
+  {
+    "parent": "Expenditure_Social Development_Culture, Community and Youth",
+    "child": "Expenditure_Social Development_Culture, Community and Youth_Development",
+    "value": 511000000
+  },
+  {
+    "parent": "Expenditure_Social Development_Culture, Community and Youth",
+    "child": "Expenditure_Social Development_Culture, Community and Youth_Operating",
+    "value": 2271000000
+  },
+  {
+    "parent": "Expenditure_Social Development",
+    "child": "Expenditure_Social Development_Education",
+    "value": 15300000000
+  },
+  {
+    "parent": "Expenditure_Social Development_Education",
+    "child": "Expenditure_Social Development_Education_Development",
+    "value": 852000000
+  },
+  {
+    "parent": "Expenditure_Social Development_Education",
+    "child": "Expenditure_Social Development_Education_Operating",
+    "value": 14448000000
+  },
+  {
+    "parent": "Expenditure_Social Development",
+    "child": "Expenditure_Social Development_Health",
+    "value": 20863000000
+  },
+  {
+    "parent": "Expenditure_Social Development_Health",
+    "child": "Expenditure_Social Development_Health_Development",
+    "value": 2068000000
+  },
+  {
+    "parent": "Expenditure_Social Development_Health",
+    "child": "Expenditure_Social Development_Health_Operating",
+    "value": 18795000000
+  },
+  {
+    "parent": "Expenditure_Social Development",
+    "child": "Expenditure_Social Development_Manpower",
+    "value": 2373000000
+  },
+  {
+    "parent": "Expenditure_Social Development_Manpower",
+    "child": "Expenditure_Social Development_Manpower_Development",
+    "value": 2000000
+  },
+  {
+    "parent": "Expenditure_Social Development_Manpower",
+    "child": "Expenditure_Social Development_Manpower_Operating",
+    "value": 2371000000
+  },
+  {
+    "parent": "Expenditure_Social Development",
+    "child": "Expenditure_Social Development_National Development",
+    "value": 9303000000
+  },
+  {
+    "parent": "Expenditure_Social Development_National Development",
+    "child": "Expenditure_Social Development_National Development_Development",
+    "value": 958000000
+  },
+  {
+    "parent": "Expenditure_Social Development_National Development",
+    "child": "Expenditure_Social Development_National Development_Operating",
+    "value": 8345000000
+  },
+  {
+    "parent": "Expenditure_Social Development",
+    "child": "Expenditure_Social Development_Social and Family Development",
+    "value": 5468000000
+  },
+  {
+    "parent": "Expenditure_Social Development_Social and Family Development",
+    "child": "Expenditure_Social Development_Social and Family Development_Development",
+    "value": 209000000
+  },
+  {
+    "parent": "Expenditure_Social Development_Social and Family Development",
+    "child": "Expenditure_Social Development_Social and Family Development_Operating",
+    "value": 5259000000
+  },
+  {
+    "parent": "Expenditure_Social Development",
+    "child": "Expenditure_Social Development_Sustainability and the Environment",
+    "value": 4124000000
+  },
+  {
+    "parent": "Expenditure_Social Development_Sustainability and the Environment",
+    "child": "Expenditure_Social Development_Sustainability and the Environment_Development",
+    "value": 1468000000
+  },
+  {
+    "parent": "Expenditure_Social Development_Sustainability and the Environment",
+    "child": "Expenditure_Social Development_Sustainability and the Environment_Operating",
+    "value": 2656000000
+  },
+  {
+    "parent": "Total Expenditure",
+    "child": "Expenditure_Security and External Relations",
+    "value": 33240000000
+  },
+  {
+    "parent": "Expenditure_Security and External Relations",
+    "child": "Expenditure_Security and External Relations_Defence",
+    "value": 23440000000
+  },
+  {
+    "parent": "Expenditure_Security and External Relations_Defence",
+    "child": "Expenditure_Security and External Relations_Defence_Development",
+    "value": 1363000000
+  },
+  {
+    "parent": "Expenditure_Security and External Relations_Defence",
+    "child": "Expenditure_Security and External Relations_Defence_Operating",
+    "value": 22077000000
+  },
+  {
+    "parent": "Expenditure_Security and External Relations",
+    "child": "Expenditure_Security and External Relations_Foreign Affairs",
+    "value": 598000000
+  },
+  {
+    "parent": "Expenditure_Security and External Relations_Foreign Affairs",
+    "child": "Expenditure_Security and External Relations_Foreign Affairs_Development",
+    "value": 37000000
+  },
+  {
+    "parent": "Expenditure_Security and External Relations_Foreign Affairs",
+    "child": "Expenditure_Security and External Relations_Foreign Affairs_Operating",
+    "value": 561000000
+  },
+  {
+    "parent": "Expenditure_Security and External Relations",
+    "child": "Expenditure_Security and External Relations_Home Affairs",
+    "value": 9202000000
+  },
+  {
+    "parent": "Expenditure_Security and External Relations_Home Affairs",
+    "child": "Expenditure_Security and External Relations_Home Affairs_Development",
+    "value": 1185000000
+  },
+  {
+    "parent": "Expenditure_Security and External Relations_Home Affairs",
+    "child": "Expenditure_Security and External Relations_Home Affairs_Operating",
+    "value": 8017000000
+  },
+  {
+    "parent": "Total Expenditure",
+    "child": "Expenditure_Economic Development",
+    "value": 24517000000
+  },
+  {
+    "parent": "Expenditure_Economic Development",
+    "child": "Expenditure_Economic Development_Info-Communications and Media Development",
+    "value": 1271000000
+  },
+  {
+    "parent": "Expenditure_Economic Development_Info-Communications and Media Development",
+    "child": "Expenditure_Economic Development_Info-Communications and Media Development_Development",
+    "value": 59000000
+  },
+  {
+    "parent": "Expenditure_Economic Development_Info-Communications and Media Development",
+    "child": "Expenditure_Economic Development_Info-Communications and Media Development_Operating",
+    "value": 1212000000
+  },
+  {
+    "parent": "Expenditure_Economic Development",
+    "child": "Expenditure_Economic Development_Manpower",
+    "value": 1331000000
+  },
+  {
+    "parent": "Expenditure_Economic Development_Manpower",
+    "child": "Expenditure_Economic Development_Manpower_Development",
+    "value": 117000000
+  },
+  {
+    "parent": "Expenditure_Economic Development_Manpower",
+    "child": "Expenditure_Economic Development_Manpower_Operating",
+    "value": 1214000000
+  },
+  {
+    "parent": "Expenditure_Economic Development",
+    "child": "Expenditure_Economic Development_Trade and Industry",
+    "value": 7185000000
+  },
+  {
+    "parent": "Expenditure_Economic Development_Trade and Industry",
+    "child": "Expenditure_Economic Development_Trade and Industry_Development",
+    "value": 5547000000
+  },
+  {
+    "parent": "Expenditure_Economic Development_Trade and Industry",
+    "child": "Expenditure_Economic Development_Trade and Industry_Operating",
+    "value": 1638000000
+  },
+  {
+    "parent": "Expenditure_Economic Development",
+    "child": "Expenditure_Economic Development_Transport",
+    "value": 14730000000
+  },
+  {
+    "parent": "Expenditure_Economic Development_Transport",
+    "child": "Expenditure_Economic Development_Transport_Development",
+    "value": 11932000000
+  },
+  {
+    "parent": "Expenditure_Economic Development_Transport",
+    "child": "Expenditure_Economic Development_Transport_Operating",
+    "value": 2798000000
+  },
+  {
+    "parent": "Total Expenditure",
+    "child": "Expenditure_Special Transfers including Top-ups to Endowment and Trust Funds",
+    "value": 23374480000
+  },
+  {
+    "parent": "Expenditure_Special Transfers including Top-ups to Endowment and Trust Funds",
+    "child": "Expenditure_Top-ups to Endowment Funds and Trust Funds",
+    "value": 19600000000
+  },
+  {
+    "parent": "Expenditure_Top-ups to Endowment Funds and Trust Funds",
+    "child": "Changi Airport Development Fund",
+    "value": 5000000000
+  },
+  {
+    "parent": "Expenditure_Top-ups to Endowment Funds and Trust Funds",
+    "child": "Coastal and Flood Protection Fund",
+    "value": 5000000000
+  },
+  {
+    "parent": "Expenditure_Top-ups to Endowment Funds and Trust Funds",
+    "child": "Future Energy Fund",
+    "value": 5000000000
+  },
+  {
+    "parent": "Expenditure_Top-ups to Endowment Funds and Trust Funds",
+    "child": "National Productivity Fund",
+    "value": 3000000000
+  },
+  {
+    "parent": "Expenditure_Top-ups to Endowment Funds and Trust Funds",
+    "child": "National Research Fund",
+    "value": 1500000000
+  },
+  {
+    "parent": "Expenditure_Top-ups to Endowment Funds and Trust Funds",
+    "child": "Cultural Matching Fund",
+    "value": 100000000
+  },
+  {
+    "parent": "Expenditure_Special Transfers including Top-ups to Endowment and Trust Funds",
+    "child": "Expenditure_Transfers to Singaporeans and businesses",
+    "value": 3774480000
+  },
+  {
+    "parent": "Expenditure_Transfers to Singaporeans and businesses",
+    "child": "SG60 Vouchers",
+    "value": 2020000000
+  },
+  {
+    "parent": "Expenditure_Transfers to Singaporeans and businesses",
+    "child": "Community Development Council Vouchers",
+    "value": 1060000000
+  },
+  {
+    "parent": "Expenditure_Transfers to Singaporeans and businesses",
+    "child": "CIT Rebate Cash Grant",
+    "value": 280100000
+  },
+  {
+    "parent": "Expenditure_Transfers to Singaporeans and businesses",
+    "child": "U-Save Rebates",
+    "value": 155000000
+  },
+  {
+    "parent": "Expenditure_Transfers to Singaporeans and businesses",
+    "child": "Edusave Account Top-up",
+    "value": 77000000
+  },
+  {
+    "parent": "Expenditure_Transfers to Singaporeans and businesses",
+    "child": "Post-Secondary Education Account Top-up",
+    "value": 75000000
+  },
+  {
+    "parent": "Expenditure_Transfers to Singaporeans and businesses",
+    "child": "CPF Transition Offset Scheme",
+    "value": 51430000
+  },
+  {
+    "parent": "Expenditure_Transfers to Singaporeans and businesses",
+    "child": "NS LifeSG Credits",
+    "value": 25930000
+  },
+  {
+    "parent": "Expenditure_Transfers to Singaporeans and businesses",
+    "child": "Additional Assistance to Self-Help Groups",
+    "value": 18000000
+  },
+  {
+    "parent": "Expenditure_Transfers to Singaporeans and businesses",
+    "child": "Other Transfers",
+    "value": 12020000
+  }
+]
