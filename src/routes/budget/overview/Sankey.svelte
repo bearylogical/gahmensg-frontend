@@ -78,7 +78,7 @@
 
   onMount(() => {
     // Ensure the data is structured correctly for the Sankey chart by importing from a JSON file
-    fetch("/src/assets/sankey_data_raw_v3.json")
+    fetch("https://data.bearylogical.net/sankey_data_raw_v3.json")
       .then((response) => response.json())
       .then((jsonData) => {
         rawSankeyData = prepareSankeyDataV2(jsonData);
