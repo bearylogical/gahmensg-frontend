@@ -3,6 +3,7 @@
   import { onMount } from "svelte";
   import { fetchBudgetOverview } from "$lib/utils/handlers";
   import Treemap from "$lib/components/Treemap.svelte";
+  import ScreenSize from "$lib/components/custom/ScreenSize.svelte";
   import Sankey from "./Sankey.svelte";
   import * as Accordion from "$lib/components/ui/accordion/index.js";
   import { mdiInformationSlabCircleOutline } from "@mdi/js";
@@ -86,8 +87,10 @@
       visual to be less cluttered by visualizing items larger than 5 billion
       SGD. You can adjust the threshold using the slider below.
     </p>
+    <ScreenSize>
+      <Sankey />
+    </ScreenSize>
 
-    <Sankey />
     <div class="my-12 h-0.5 border-t-0 bg-neutral-100 dark:bg-white/10"></div>
     <h3 class="text-2xl font-light mb-2" id="expenditure-breakdown-by-ministry">
       Expenditure Breakdown by Ministry for FY2025
