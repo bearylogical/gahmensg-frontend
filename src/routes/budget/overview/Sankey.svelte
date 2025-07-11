@@ -13,7 +13,9 @@
     nodesFromLinks,
   } from "layerchart";
   import { Spinner } from "flowbite-svelte";
-  import { scaleSequential } from "d3-scale";
+  import * as chromatic from "d3-scale-chromatic";
+  import { hsl } from "d3-color";
+  import { scaleSequential, scaleOrdinal } from "d3-scale";
   import type { SankeyNode, SankeyLink } from "d3-sankey";
   import { Icon } from "svelte-ux";
   import { mdiArrowRightBold } from "@mdi/js";
@@ -74,7 +76,12 @@
     value: number;
   }
 
-  const colorScale = scaleSequential([0, 1], interpolateCool);
+  // manage colors
+  // filter out hard to see yellow and green
+  const colorScale = scaleOrdinal(
+    chromatic.schemeSpectral[11].filter((c) => hsl(c).h < 60 || hsl(c).h > 90)
+  );
+  // const colorScale = scaleSequential([0, 1], interpolateCool);
 
   onMount(() => {
     // Ensure the data is structured correctly for the Sankey chart by importing from a JSON file
@@ -318,7 +325,7 @@
                     fillOpacity={highlightLinkIndexes.length &&
                     !highlightLinkIndexes.includes(node.index)
                       ? 0.5
-                      : 0.7}
+                      : 0.9}
                     tweened
                     onpointerenter={() => {
                       highlightLinkIndexes = [
@@ -362,7 +369,7 @@
                         : "start"
                       : "start"}
                     verticalAnchor="middle"
-                    class="pointer-events-none"
+                    class="pointer-events-none z-10"
                   />
                 </Group>
               {/each}
