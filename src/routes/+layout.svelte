@@ -1,7 +1,6 @@
 <script>
   import "../app.pcss";
   import { page } from "$app/stores";
-  import { fade } from "svelte/transition";
   import {
     Navbar,
     NavBrand,
@@ -27,7 +26,7 @@
   <Navbar
     let:NavContainer
     color="primary"
-    class="bg-white dark:bg-white border-b"
+    class="bg-white dark:bg-gray-900 border-b"
   >
     <NavContainer class="px-2 py-2 rounded-lg bg-white" fluid={false}>
       <NavBrand href="/">
@@ -36,7 +35,7 @@
           >GahmenExplorer</span
         >
       </NavBrand>
-      <NavHamburger />
+      <NavHamburger aria-label="Toggle navigation menu" />
       <NavUl {activeUrl} {activeClass} {nonActiveClass}>
         <NavLi href="/">Home</NavLi>
         <NavLi href="/about">About</NavLi>
@@ -72,9 +71,11 @@
 			
 		</div>
 	{/key} -->
-  <slot />
+  <main class="flex-1">
+    <slot />
+  </main>
 
-  <section class="px-10 sm:px-2 sticky top-[100vh] py-6 sm:py-10">
+  <section class="px-10 sm:px-2 py-6 sm:py-10">
     <Footer>
       <span
         class="block text-sm text-gray-500 sm:text-center dark:text-gray-400"
