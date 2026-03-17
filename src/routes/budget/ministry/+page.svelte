@@ -20,6 +20,7 @@
   let programmesData: [] = [];
   let filteredData: [];
   let disableSelect = true;
+  let isLoading = false;
   let pivotExpenditureData = [];
   let pivotPersonnelData = [];
   let recentBudgetYear: number;
@@ -105,6 +106,7 @@
   }
 
   async function fetchHandler(selectedAgency, yearFromDropdown = null) {
+    isLoading = true;
     const res = await fetchMinistryData(selectedAgency);
     ministryData = res;
 
@@ -171,6 +173,8 @@
       drillDownData.length > 0
         ? getMostRecentYearData(drillDownData).value_year
         : 2025;
+
+    isLoading = false;
   }
 
   function handleYearClick(event) {
@@ -290,10 +294,6 @@
           typeahead={true}
           onSelectedChange={(agency) => {
             selectMinistryHandler(agency);
-            focusElement.scrollIntoView({
-              behavior: "smooth",
-              block: "start",
-            });
           }}
         >
           <Select.Trigger>
@@ -361,20 +361,24 @@
               {/if}
             </Card.Description>
             <Card.Title class="text-4xl ">
-              {#if pivotExpenditureData.length > 0}
+              {#if isLoading}
+                <span class="text-gray-400">Loading…</span>
+              {:else if pivotExpenditureData.length > 0}
                 {d3
                   .format(
                     "$.3s"
                   )(getMostRecentYearData(pivotExpenditureData).value_amount)
                   .replace("G", "B")}
               {:else}
-                No Agency Selected
+                —
               {/if}
             </Card.Title>
           </Card.Header>
           <Card.Content>
             <div class="text-xs text-muted-foreground">
-              {#if pivotExpenditureData.length > 0}
+              {#if isLoading}
+                &nbsp;
+              {:else if pivotExpenditureData.length > 0}
                 <span class={getArrowColor(pivotExpenditureData)}>
                   {getArrow(pivotExpenditureData)}{getPercentageDiff(
                     pivotExpenditureData
@@ -383,7 +387,7 @@
                 from last year ({getMostRecentYearData(pivotExpenditureData)
                   .value_year - 1})
               {:else}
-                No Agency Selected
+                No expenditure data available
               {/if}
             </div>
           </Card.Content>
@@ -398,20 +402,24 @@
               {/if}
             </Card.Description>
             <Card.Title class="text-4xl ">
-              {#if pivotPersonnelData.length > 0}
+              {#if isLoading}
+                <span class="text-gray-400">Loading…</span>
+              {:else if pivotPersonnelData.length > 0}
                 {d3
                   .format(
                     ".2s"
                   )(getMostRecentYearData(pivotPersonnelData).value_amount)
                   .replace("G", "B")}
               {:else}
-                No Agency Selected
+                —
               {/if}
             </Card.Title>
           </Card.Header>
           <Card.Content>
             <div class="text-xs text-muted-foreground">
-              {#if pivotPersonnelData.length > 0}
+              {#if isLoading}
+                &nbsp;
+              {:else if pivotPersonnelData.length > 0}
                 <span class={getArrowColor(pivotPersonnelData)}>
                   {getArrow(pivotPersonnelData)}{getPercentageDiff(
                     pivotPersonnelData
@@ -420,7 +428,7 @@
                 from last year ({getMostRecentYearData(pivotPersonnelData)
                   .value_year - 1})
               {:else}
-                No Agency Selected
+                No personnel data available
               {/if}
             </div>
           </Card.Content>
@@ -429,8 +437,18 @@
       </div>
     </div>
 
+    <div aria-live="polite" aria-atomic="true" class="sr-only">
+      {#if !isLoading && selectedID}
+        Showing data for {selectedID}{currentSelectedYear ? `, ${currentSelectedYear}` : ''}.
+      {/if}
+    </div>
+
     <div class="md:col-span-4 sm:col-span-1">
-      {#if drillDownData.length > 0}
+      {#if isLoading}
+        <div class="h-[600px] border rounded flex items-center justify-center">
+          <p class="text-center text-gray-500">Loading data…</p>
+        </div>
+      {:else if drillDownData.length > 0}
         <Dashboard
           expenditureData={pivotExpenditureData}
           {personnelData}
@@ -445,7 +463,7 @@
         />
       {:else}
         <div class="h-[600px] border rounded flex items-center justify-center">
-          <p class="text-center text-4xl">No data available</p>
+          <p class="text-center text-gray-500">No data available for this agency.</p>
         </div>
       {/if}
     </div>

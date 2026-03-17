@@ -74,7 +74,6 @@
   }
 
   let currentYearData: number;
-  let chart_options = chartOptions;
   let transformedPersonnelData;
   let transformedProjectData;
   let transformedProgrammesData;
@@ -101,7 +100,7 @@
     );
   }
 
-  $: chart_options.series = groupData(expenditureData);
+  $: chart_options = { ...chartOptions, series: groupData(expenditureData) };
   $: summaryProjectData = getTopNData(transformedProjectData, 5);
   $: summaryPersonnelData = getTopNData(transformedPersonnelData, 5);
 

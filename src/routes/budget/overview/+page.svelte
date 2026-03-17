@@ -1,6 +1,5 @@
 <script lang="ts">
   import { Spinner } from "flowbite-svelte";
-  import { onMount } from "svelte";
   import { fetchBudgetOverview } from "$lib/utils/handlers";
   import Treemap from "$lib/components/Treemap.svelte";
   import ScreenSize from "$lib/components/custom/ScreenSize.svelte";
@@ -9,20 +8,15 @@
   import { mdiInformationSlabCircleOutline } from "@mdi/js";
   import { Icon } from "svelte-ux";
 
-  let budgetOverview: [] = [];
-  onMount(async () => {
-    // add delay to show loading state
-    // await new Promise((resolve) => setTimeout(resolve, 1000));
-    budgetOverview = await fetchBudgetOverview("2025", "ESTIMATED");
-  });
+  const budgetPromise = fetchBudgetOverview("2025", "ESTIMATED");
 </script>
 
 <div class="mx-auto container pt-10">
-  {#await budgetOverview}
+  {#await budgetPromise}
     <div class="h-screen border rounded p-4 flex items-center justify-center">
-      <Spinner color="red" size={16} aria-label="Loading data..." />
+      <Spinner color="red" size={16} aria-label="Loading budget data..." />
     </div>
-  {:then data}
+  {:then budgetOverview}
     <h2 class="text-3xl font-semibold mb-4">Singapore Budget Overview 2025</h2>
     <div class="mb-4">
       In March 2025, the Singapore government presented its budget for the
@@ -96,13 +90,13 @@
       Expenditure Breakdown by Ministry for FY2025
     </h3>
     {#if budgetOverview.length > 0}
-      <Treemap {data} />
+      <Treemap data={budgetOverview} />
     {:else}
-      <div class="h-screen border rounded p-4 flex items-center justify-center">
-        <Spinner color="red" size={20} aria-label="Loading Sankey data..." />
+      <div class="h-48 border rounded p-4 flex items-center justify-center">
+        <p class="text-gray-500">No expenditure data available.</p>
       </div>
     {/if}
   {:catch error}
-    <div>Error: {error.message}</div>
+    <div class="p-4 text-red-600">Failed to load budget data: {error.message}</div>
   {/await}
 </div>

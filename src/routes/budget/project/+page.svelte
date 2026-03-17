@@ -23,6 +23,7 @@
   let errorMessage: string | null = null;
   let singleProject: Project | null = null;
   let previousSearchTerm: string = "";
+  let selectedProject: Project | null = null;
 
   const defaultLayout = [265, 655, 655];
 
@@ -52,77 +53,88 @@
       return acc;
     }, {});
 
-  let timeout: NodeJS.Timeout;
+  let debounceTimeout: NodeJS.Timeout;
+  let currentAbortController: AbortController | null = null;
 
   function clearSearch() {
     searchTerm = "";
     results = [];
     singleProject = null;
+    selectedProject = null;
     errorMessage = null;
-    projectId = null; // Clear projectId as well
+    projectId = null;
     projectStore.clear();
+  }
+
+  async function transformProjectRecords(data: ProjectRecord[]): Promise<Project[]> {
+    let f = data.map((v) => ({
+      ...v,
+      stringIdentifier:
+        (v.project_title + " " + v.ministry)
+          .replaceAll(/[^a-zA-Z]/g, "+")
+          .replaceAll(" ", "+")
+          .toLowerCase(),
+    }));
+    f = Object.groupBy(
+      f,
+      ({ stringIdentifier }: { stringIdentifier: string }) => stringIdentifier
+    );
+    f = Object.assign(
+      {},
+      mapKeys(f, (val: ProjectRecord[], _key: string) => val[0]?.project_title || "")
+    );
+
+    let transformed: Project[] = [];
+    for (const [key, value] of Object.entries(f)) {
+      let recentYearData = getMostRecentYearData(value);
+      if (!recentYearData) continue;
+      let _res: Project = {
+        values: value,
+        project_title: key,
+        project_identifier: recentYearData.stringIdentifier || "",
+        project_ids: uniqueProjectIds(value).filter(
+          (id): id is number => id !== undefined
+        ),
+        ministry: recentYearData.ministry || "",
+        recentYear: recentYearData.value_year || 0,
+        project_hash: await digestMessage(recentYearData.stringIdentifier || ""),
+      };
+      transformed.push(_res);
+    }
+    return transformed;
   }
 
   async function handleSearch(event) {
     searchTerm = event.target.value;
-    clearTimeout(timeout);
-    timeout = setTimeout(async () => {
-      if (searchTerm === previousSearchTerm) {
-        return; // Do not send request if search term is unchanged
+    clearTimeout(debounceTimeout);
+
+    debounceTimeout = setTimeout(async () => {
+      if (searchTerm === previousSearchTerm) return;
+
+      // Cancel any in-flight request
+      if (currentAbortController) {
+        currentAbortController.abort();
       }
-      errorMessage = null; // Clear previous errors
-      singleProject = null; // Clear single project view
+      currentAbortController = new AbortController();
+
+      errorMessage = null;
+      singleProject = null;
+
       try {
-        if (searchTerm && searchTerm.length > 2) {
+        if (searchTerm && searchTerm.trim().length > 2) {
           const data: ProjectRecord[] = await fetchProjects(searchTerm);
-          let f = data.map((v) => ({
-            ...v,
-            stringIdentifier:
-              (v.project_title + " " + v.ministry)
-                .replaceAll(/[^a-zA-Z]/g, "+")
-                .replaceAll(" ", "+")
-                .toLowerCase(),
-          }));
-          f = Object.groupBy(
-            f,
-            ({ stringIdentifier }: { stringIdentifier: string }) =>
-              stringIdentifier
-          );
-
-          f = Object.assign(
-            {},
-            mapKeys(f, (val: ProjectRecord[], key: string) => val[0]?.project_title || "")
-          );
-
-          let transformed = [];
-          for (const [key, value] of Object.entries(f)) {
-            let recentYearData = getMostRecentYearData(value);
-            if (!recentYearData) continue; // Skip if no recent year data
-            let _res: Project = {
-              values: value,
-              project_title: key,
-              project_identifier: recentYearData.stringIdentifier || "",
-              project_ids: uniqueProjectIds(value).filter(
-                (id): id is number => id !== undefined
-              ),
-              ministry: recentYearData.ministry || "",
-              recentYear: recentYearData.value_year || 0,
-              project_hash: await digestMessage(recentYearData.stringIdentifier || ""),
-            };
-            transformed.push(_res);
-          }
-          results = transformed;
-          previousSearchTerm = searchTerm; // Update previous search term on successful fetch
+          results = await transformProjectRecords(data);
+          previousSearchTerm = searchTerm;
         } else {
           projectStore.clear();
           results = [];
-          previousSearchTerm = searchTerm; // Update previous search term
+          previousSearchTerm = searchTerm;
         }
       } catch (error) {
-        console.error("Error fetching projects:", error);
+        if (error?.name === "AbortError") return; // Request was intentionally cancelled
         errorMessage = "Failed to fetch projects. Please try again later.";
         results = [];
-        previousSearchTerm = searchTerm; // Update previous search term even on error
+        previousSearchTerm = searchTerm;
       }
     }, 300);
   }
@@ -135,59 +147,30 @@
   // Handle project ID from URL
   $: if (projectId) {
     (async () => {
-      errorMessage = null; // Clear previous errors
+      errorMessage = null;
       try {
         const data: ProjectRecord[] = await fetchProjectById(projectId);
         if (data && data.length > 0) {
-          let f = data.map((v) => ({
-            ...v,
-            stringIdentifier:
-              (v.project_title + " " + v.ministry)
-                .replaceAll(/[^a-zA-Z]/g, "+")
-                .replaceAll(" ", "+")
-                .toLowerCase(),
-          }));
-          f = Object.groupBy(
-            f,
-            ({ stringIdentifier }: { stringIdentifier: string }) =>
-              stringIdentifier
-          );
-
-          f = Object.assign(
-            {},
-            mapKeys(f, (val: ProjectRecord[], key: string) => val[0]?.project_title || "")
-          );
-
-          let transformed = [];
-          for (const [key, value] of Object.entries(f)) {
-            let recentYearData = getMostRecentYearData(value);
-            if (!recentYearData) continue; // Skip if no recent year data
-            let _res: Project = {
-              values: value,
-              project_title: key,
-              project_identifier: recentYearData.stringIdentifier || "",
-              project_ids: uniqueProjectIds(value).filter(
-                (id): id is number => id !== undefined
-              ),
-              ministry: recentYearData.ministry || "",
-              recentYear: recentYearData.value_year || 0,
-              project_hash: await digestMessage(recentYearData.stringIdentifier || ""),
-            };
-            transformed.push(_res);
-          }
-          singleProject = transformed[0]; // Assuming only one project for a given ID
-          results = []; // Clear search results
-          searchTerm = ""; // Clear search term
+          const transformed = await transformProjectRecords(data);
+          singleProject = transformed[0] ?? null;
+          results = [];
+          searchTerm = "";
         } else {
           errorMessage = "Project not found for the given ID.";
           singleProject = null;
         }
       } catch (error) {
-        console.error("Error fetching project by ID:", error);
         errorMessage = "Failed to fetch project by ID. Please try again later.";
         singleProject = null;
       }
     })();
+  }
+
+  $: activeProject = singleProject ?? results.find((item) => item.project_hash === $projectStore.selected) ?? null;
+
+  function selectProject(project: Project) {
+    selectedProject = project;
+    projectStore.setProject(project.project_hash);
   }
 </script>
 
@@ -200,6 +183,8 @@
       Discover and track project expenditure over time.
     </h3>
   </div>
+
+  <!-- Desktop layout: resizable 3-pane -->
   <div class="hidden md:block">
     <Resizable.PaneGroup
       direction="horizontal"
@@ -216,9 +201,14 @@
               on:input={handleSearch}
               placeholder="Search for a project..."
               class="pl-8 pr-8"
+              aria-label="Search projects"
             />
             {#if searchTerm}
-              <button on:click={clearSearch} class="absolute top-7 right-6 h-4 w-4 text-muted-foreground">
+              <button
+                on:click={clearSearch}
+                class="absolute top-7 right-6 h-4 w-4 text-muted-foreground"
+                aria-label="Clear search"
+              >
                 <X />
               </button>
             {/if}
@@ -233,7 +223,7 @@
                   "flex flex-col items-start gap-2 rounded-lg border p-3 text-left text-sm transition-all hover:bg-accent",
                   $projectStore.selected === singleProject.project_hash && "bg-muted"
                 )}
-                on:click={() => projectStore.setProject(singleProject.project_hash)}
+                on:click={() => selectProject(singleProject)}
               >
                 <div class="flex w-full flex-col gap-1">
                   <div class="flex items-center">
@@ -268,7 +258,7 @@
                     "flex flex-col items-start gap-2 rounded-lg border p-3 text-left text-sm transition-all hover:bg-accent",
                     $projectStore.selected === item.project_hash && "bg-muted"
                   )}
-                  on:click={() => projectStore.setProject(item.project_hash)}
+                  on:click={() => selectProject(item)}
                 >
                   <div class="flex w-full flex-col gap-1">
                     <div class="flex items-center">
@@ -297,42 +287,101 @@
                   </div>
                 </button>
               {/each}
-            {:else if searchTerm === "" || searchTerm === " " || searchTerm === undefined}
-              <p class="text-muted-foreground m-auto">Start searching!</p>
+            {:else if !searchTerm || searchTerm.trim().length <= 2}
+              <p class="text-muted-foreground m-auto text-sm">Enter at least 3 characters to search.</p>
             {:else if errorMessage}
-              <p class="text-red-500 m-auto">{errorMessage}</p>
+              <p class="text-red-500 m-auto text-sm">{errorMessage}</p>
             {:else}
-              <div>
-                <p class="text-muted-foreground m-auto">
-                  No results found for "{searchTerm}". Try something else?
-                </p>
-              </div>
+              <p class="text-muted-foreground m-auto text-sm">
+                No results found for "{searchTerm}". Try a different term.
+              </p>
             {/if}
           </div>
         </ScrollArea></Resizable.Pane
       >
       <Resizable.Handle withHandle />
       <Resizable.Pane class="p-4 " defaultSize={defaultLayout[1]}>
-        {#if singleProject}
+        {#if activeProject}
           <div class="flex flex-col gap-2 pt-0">
             <ProjectDisplay
               chart_options={chartOptions}
-              expenditureData={singleProject}
+              expenditureData={activeProject}
             />
           </div>
-        {:else if $projectStore.selected !== null && results.length}
-          <div class="flex flex-col gap-2 pt-0">
-            <ProjectDisplay
-              chart_options={chartOptions}
-              expenditureData={results.find(
-                (item) => item.project_hash === $projectStore.selected
-              ) || null}
-            />
+        {:else}
+          <div class="h-full flex items-center justify-center text-muted-foreground text-sm">
+            Select a project to view details.
           </div>
         {/if}
       </Resizable.Pane>
     </Resizable.PaneGroup>
   </div>
+
+  <!-- Mobile layout: stacked search → list → detail -->
+  <div class="block md:hidden">
+    <div class="relative mb-4">
+      <Search class="absolute top-3 left-3 h-4 w-4 text-muted-foreground" />
+      <Input
+        value={searchTerm}
+        on:input={handleSearch}
+        placeholder="Search for a project..."
+        class="pl-8 pr-8"
+        aria-label="Search projects"
+      />
+      {#if searchTerm}
+        <button
+          on:click={clearSearch}
+          class="absolute top-3 right-3 h-4 w-4 text-muted-foreground"
+          aria-label="Clear search"
+        >
+          <X />
+        </button>
+      {/if}
+    </div>
+
+    {#if activeProject && selectedProject}
+      <div class="mb-4">
+        <button
+          on:click={() => { selectedProject = null; }}
+          class="text-sm text-blue-600 mb-2"
+        >
+          ← Back to results
+        </button>
+        <ProjectDisplay chart_options={chartOptions} expenditureData={activeProject} />
+      </div>
+    {:else}
+      <div class="flex flex-col gap-2">
+        {#if singleProject}
+          <button
+            class="flex flex-col items-start gap-2 rounded-lg border p-3 text-left text-sm hover:bg-accent"
+            on:click={() => selectProject(singleProject)}
+          >
+            <div class="font-semibold line-clamp-2">{singleProject.project_title}</div>
+            <div class="text-xs font-light text-muted-foreground">{singleProject.ministry} · {singleProject.recentYear}</div>
+          </button>
+        {:else if results.length > 0}
+          {#each results as item}
+            <button
+              class="flex flex-col items-start gap-2 rounded-lg border p-3 text-left text-sm hover:bg-accent"
+              on:click={() => selectProject(item)}
+            >
+              <div class="font-semibold line-clamp-2">{item.project_title}</div>
+              <div class="text-xs font-light text-muted-foreground">{item.ministry} · {item.recentYear}</div>
+            </button>
+          {/each}
+        {:else if !searchTerm || searchTerm.trim().length <= 2}
+          <p class="text-muted-foreground text-sm text-center py-8">Enter at least 3 characters to search.</p>
+        {:else if errorMessage}
+          <p class="text-red-500 text-sm text-center py-8">{errorMessage}</p>
+        {:else}
+          <p class="text-muted-foreground text-sm text-center py-8">
+            No results found for "{searchTerm}". Try a different term.
+          </p>
+        {/if}
+      </div>
+    {/if}
+  </div>
+
   <div>
     <div class="pt-6">
       <h3 class="text-2xl font-light">Data Source</h3>

@@ -21,29 +21,25 @@
 				GahmenExplorer attemps to present Singapore related data in a
 				simpler manner.</svelte:fragment
 			>
-			<a href="/"
-				><Button
-					size="xl"
-					color="red"
-					class="inline-flex items-center justify-center mr-3"
-					href="/budget"
-					>Get started<ArrowRightOutline
-						size="md"
-						class="ml-2 -mr-1"
-					/></Button
-				>
-			</a>
-			<a href="/"
-				><Button
-					color="light"
-					size="xl"
-					class="inline-flex items-center justify-center mt-3"
-					href="/about">About GahmenExplorer</Button
-				>
-			</a>
+			<Button
+				size="xl"
+				color="red"
+				class="inline-flex items-center justify-center mr-3"
+				href="/budget"
+				>Get started<ArrowRightOutline
+					size="md"
+					class="ml-2 -mr-1"
+				/></Button
+			>
+			<Button
+				color="light"
+				size="xl"
+				class="inline-flex items-center justify-center mt-3"
+				href="/about">About GahmenExplorer</Button
+			>
 		</HeroHeader>
 	</div>
 	<div class="hidden lg:mt-0 lg:col-span-5 lg:flex">
-		<img src={heroImage} alt="mockup" />
+		<img src={heroImage} alt="Singapore lion search illustration" />
 	</div>
 </section>

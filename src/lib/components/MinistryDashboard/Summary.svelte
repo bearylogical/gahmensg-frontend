@@ -23,7 +23,7 @@
     "POLITICAL APPOINTMENTS": "blue",
     "PARLIAMENTARY APPOINTMENTS": "blue",
     "TEMPORARY, DAILY-RATED & OTHER STAFF": "red",
-    "TTEMPORARY DAILY-RATED & OTHER STAFF": "red",
+    "TEMPORARY DAILY-RATED & OTHER STAFF": "red",
     "PERMANENT STAFF": "green",
     "CIVIL LIST": "purple",
   };
@@ -51,8 +51,7 @@
     <Heading tag="h3" class="w-fit text-lg font-semibold dark:text-white ">
       Agency Summary
     </Heading>
-    <button>
-      <span class="sr-only">Show information</span>
+    <button aria-label="Show agency summary information" title="Show information">
       <QuestionCircleOutline
         size="sm"
         class="text-gray-400 hover:text-gray-500"
@@ -137,22 +136,6 @@
             </div>
           </li>
         {/each}
-        {#if personnelData.length < 5}
-          {#each Array(5 - personnelData.length) as _}
-            <li class="py-3 sm:py-4">
-              <div class="flex items">
-                <div class="ml-3">
-                  <p class="truncate font-medium text-gray-900 dark:text-white">
-                    -
-                  </p>
-                  <span class="text-xs text-gray-500 dark:text-gray-400">
-                    -
-                  </span>
-                </div>
-              </div>
-            </li>
-          {/each}
-        {/if}
       </ul>
     </TabItem>
     <TabItem class="w-full">
@@ -213,22 +196,6 @@
             </div>
           </li>
         {/each}
-        {#if projectData.length < 5}
-          {#each Array(5 - projectData.length) as _}
-            <li class="py-3 sm:py-4">
-              <div class="flex items items-center">
-                <div class="ml-3">
-                  <p class="truncate font-medium text-gray-900 dark:text-white">
-                    -
-                  </p>
-                  <span class="text-xs text-gray-500 dark:text-gray-400">
-                    -
-                  </span>
-                </div>
-              </div>
-            </li>
-          {/each}
-        {/if}
       </ul>
     </TabItem>
   </Tabs>
